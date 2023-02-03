@@ -3,6 +3,8 @@ import Home from "../Home/Home";
 import Layout from "../Layout/Layout";
 import "./App.css";
 import HomeJobsContextProvider from "../../Context/HomeJobsContext";
+import JobDetails from "../JobDetails/JobDetails";
+import CreateJob from "../CreateJob/CreateJob";
 
 function App() {
   let routers = createBrowserRouter([
@@ -14,6 +16,19 @@ function App() {
           index: true,
           element: <Home />,
         },
+        {
+          path: "details/:id",
+          element: (
+              <JobDetails/>
+          ),
+        },
+        {
+          path: "createJob",
+          element: (
+            <CreateJob />
+          )
+        }
+
       ],
     },
   ]);
