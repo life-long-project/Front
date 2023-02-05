@@ -1,14 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import CreateJob from "../CreateJob/CreateJob";
 
 export default function Navbar() {
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary shadow">
-        <div className="container-fluid">
-          <Link className="navbar-brand" to="">
-            Navbar
+      <nav className="navbar navbar-expand-lg shadow bg-white">
+        <div className="container">
+          <Link className="navbar-brand fw-bolder text-uppercase" to="">
+            Shaghal
           </Link>
           <button
             className="navbar-toggler"
@@ -28,11 +27,6 @@ export default function Navbar() {
                   Home
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to='/createJob'>
-                  Create Job
-                </Link>
-              </li>
               <li className="nav-item dropdown">
                 <Link
                   className="nav-link dropdown-toggle"
@@ -41,7 +35,7 @@ export default function Navbar() {
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  Dropdown
+                  Browse Jobs
                 </Link>
                 <ul className="dropdown-menu">
                   <li>
@@ -62,7 +56,9 @@ export default function Navbar() {
                 </ul>
               </li>
               <li className="nav-item">
-                <Link className="nav-link disabled">Disabled</Link>
+                <Link className="nav-link" to="/createJob">
+                  Create Job
+                </Link>
               </li>
             </ul>
           </div>

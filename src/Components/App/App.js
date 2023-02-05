@@ -18,17 +18,12 @@ function App() {
         },
         {
           path: "details/:id",
-          element: (
-              <JobDetails/>
-          ),
+          element: <JobDetails />,
         },
         {
           path: "createJob",
-          element: (
-            <CreateJob />
-          )
-        }
-
+          element: <CreateJob />,
+        },
       ],
     },
   ]);
