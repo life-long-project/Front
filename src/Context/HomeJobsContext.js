@@ -8,15 +8,16 @@ export default function HomeJobsContextProvider(props) {
 
   async function getHomeJobs() {
     let { data } = await axios.get("https://back-ph2h.onrender.com/jobs");
-    data.reverse();
-    setJobs(data);
+    //data.jobs.reverse();
+    setJobs(data.jobs);
   }
 
   async function searchedJobs(search) {
     let { data } = await axios.get(
-      `https://back-ph2h.onrender.com/jobs/?q=${search}`
+      `https://back-ph2h.onrender.com/jobs/?search=${search}`
     );
-    search.length === 0 ? getHomeJobs() : setJobs(data);
+    console.log(data);
+    search.length === 0 ? getHomeJobs() : setJobs(data.jobs);
     // setJobs(data);
   }
 

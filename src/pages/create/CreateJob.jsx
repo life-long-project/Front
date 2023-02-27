@@ -1,8 +1,10 @@
 import axios from "axios";
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateJob() {
+  const navigate = useNavigate();
   const [jobData, setJobData] = useState({
     job_name: "",
     posted_by_id: "",
@@ -24,6 +26,7 @@ export default function CreateJob() {
     await axios.post(`https://back-ph2h.onrender.com/jobs/`, jobData, {
       headers: { "Content-Type": "application/json" },
     });
+    navigate("/");
   }
 
   return (

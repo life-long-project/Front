@@ -1,10 +1,10 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "../Home/Home";
-import Layout from "../Layout/Layout";
+import Home from "../pages/home/Home";
+import Layout from "../Components/Layout/Layout";
 import "./App.css";
-import HomeJobsContextProvider from "../../Context/HomeJobsContext";
-import JobDetails from "../JobDetails/JobDetails";
-import CreateJob from "../CreateJob/CreateJob";
+import HomeJobsContextProvider from "../Context/HomeJobsContext";
+import JobDetails from "../pages/jobDetails/JobDetails";
+import CreateJob from "../pages/create/CreateJob";
 
 function App() {
   let routers = createBrowserRouter([

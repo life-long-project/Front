@@ -6,7 +6,6 @@ import moment from "moment";
 
 export default function Home() {
   let { jobs, searchedJobs } = useContext(HomeJobsContext);
-  console.log(jobs);
 
   function handleIsActiveFilter(value) {
     searchedJobs(value);
