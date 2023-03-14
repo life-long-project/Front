@@ -18,7 +18,7 @@ const skillsList = [
 export default function Home() {
   const [url, setUrl] = useState("https://back-ph2h.onrender.com/jobs");
   const [search, setSearch] = useState("");
-  const [skills, setSkills] = useState("coffee");
+  const [skills, setSkills] = useState("");
   const { data, isPending, error } = useAxiosGet(url);
 
   const handleSearch = (e) => {
@@ -39,6 +39,7 @@ export default function Home() {
   };
 
   console.log(url);
+  console.log(skills);
 
   return (
     <>
