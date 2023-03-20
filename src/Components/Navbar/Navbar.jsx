@@ -11,10 +11,12 @@ export default function Navbar() {
         </Link>
 
         <div className="top-btn">
-          <Link>
+          <Link to="/signup">
             <span>Sign Up</span>
           </Link>
-          <button>Log In</button>
+          <Link to="/login">
+            <button>Log In</button>
+          </Link>
         </div>
       </header>
     </>

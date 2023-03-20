@@ -6,6 +6,8 @@ import HomeJobsContextProvider from "../Context/HomeJobsContext";
 import JobDetails from "../pages/jobDetails/JobDetails";
 import CreateJob from "../pages/create/CreateJob";
 import ProfilePage from "../pages/ProfilePage/ProfilePage";
+import SignUp from "../pages/signup/SignUp";
+import Login from "../pages/login/Login";
 
 function App() {
   let routers = createBrowserRouter([
@@ -26,9 +28,17 @@ function App() {
           element: <CreateJob />,
         },
         {
-          path: 'profile', 
-          element: <ProfilePage />
-      }
+          path: "signup",
+          element: <SignUp />,
+        },
+        {
+          path: "login",
+          element: <Login />,
+        },
+        {
+          path: "profile",
+          element: <ProfilePage />,
+        },
       ],
     },
   ]);
