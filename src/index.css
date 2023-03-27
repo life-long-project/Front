@@ -8,6 +8,9 @@
   font-size: 30px;
   line-height: 1.375;
 }
+a{
+  text-decoration: none !important;
+}
 .purbleBtn{
   background-color: #766df4 !important;
   border: none !important;

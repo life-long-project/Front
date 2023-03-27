@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Row, Col, Card, CardImg, CardBody } from "reactstrap";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Autoplay, Pagination } from "swiper";
+import "./Testimonal.css"
 
 //swiper css
 
@@ -73,7 +74,7 @@ export default function Testimonal() {
                           <div className="mb-4">
                             <CardImg
                               src={testimonalDetails.image}
-                              className="avatar avatar-small w-50 m-auto"
+                              className="TestimonalImg m-auto"
                               alt=""
                             />
                           </div>
