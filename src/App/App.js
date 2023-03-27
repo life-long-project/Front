@@ -8,8 +8,6 @@ import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import SignUp from "../pages/signup/SignUp";
 import Login from "../pages/login/Login";
 
-// chakra
-import { ChakraProvider } from "@chakra-ui/react";
 import LandingPage from "../pages/Landing Page/LandingPage";
 function App() {
   let routers = createBrowserRouter([
@@ -51,9 +49,7 @@ function App() {
 
   return (
     <>
-      <ChakraProvider>
         <RouterProvider router={routers} />
-      </ChakraProvider>
     </>
   );
 }
