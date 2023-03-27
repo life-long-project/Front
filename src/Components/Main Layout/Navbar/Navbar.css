@@ -1,0 +1,45 @@
+header {
+  position: sticky;
+  width: 100%;
+  right: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+  z-index: 1000;
+  transition: all 0.35s ease;
+  background: #fff;
+  padding: 12px 15%;
+  box-shadow: 0px 0px 1px #13084982;
+}
+header a {
+  text-decoration: none;
+}
+.logo h3 {
+  max-width: 100%;
+  width: 150px;
+  height: auto;
+  color: var(--main-color);
+  font-weight: bold;
+}
+.top-btn {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+.top-btn a {
+  color: var(--main-color);
+  font-size: medium;
+  font-weight: bold;
+}
+.top-btn button {
+  display: inline-block;
+  background: var(--text-color);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 30px;
+  border: none;
+  font-size: 17px;
+  font-weight: 700;
+}
