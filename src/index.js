@@ -5,8 +5,9 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
-import "@fortawesome/fontawesome-free/css/all.min.css";
-
+import "hover.css/css/hover-min.css";
+import "./assests/css/app-purple.min.css";
+import "./assests/css/icons.min.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

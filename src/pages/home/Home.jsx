@@ -1,11 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { HomeJobsContext } from "../../Context/HomeJobsContext";
 import { useAxiosGet } from "../../hooks/useAxiosGet";
-import Loading from "../../Components/loadingPage/Loading";
+import Loading from "../loadingPage/Loading";
 import JobList from "../../Components/JobList/JobList";
 import "./Home.css";
-import moment from "moment";
 import Select from "react-select";
 
 const skillsList = [
@@ -89,6 +87,7 @@ export default function Home() {
         <h1 className="error">No Jobs to load</h1>
       )}
       {data && <JobList jobs={data.jobs} />}
+
     </>
   );
 }

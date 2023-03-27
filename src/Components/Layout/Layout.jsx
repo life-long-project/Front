@@ -1,15 +1,16 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Footer from "../Footer/Footer";
-import Navbar from "../Navbar/Navbar";
-
+import Subscribe from "../Main Layout/Subscribe/Subscribe";
+import Footer from "../Main Layout/Footer/Footer";
+import ScrollTop from "../Main Layout/ScrollTop/ScrollTop";
+import Navbar from "../Main Layout/Navbar/Navbar";
 export default function Layout() {
   return (
     <>
       <Navbar />
-      <div className="container  my-5 min-vh-100">
         <Outlet></Outlet>
-      </div>
+      <Subscribe />
+      <ScrollTop />
       <Footer />
     </>
   );

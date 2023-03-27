@@ -1,36 +1,19 @@
-@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap");
-body {
-  margin: 0;
-  font-family: "Raleway", sans-serif !important;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  /* background-color: #f5f6f7 !important; */
-}
-:root {
-  --bg-color: #ffffff;
-  --second-color: #f54300;
-  --main-color: #7dd87d;
-  --text-color: #130849;
-  --other-color: #999fb9;
-  --big-font: 4.8rem;
-  --h2-font: 3.2rem;
-  --p-font: 1rem;
+.section {
+  padding-top: 80px;
+  padding-bottom: 80px;
+  position: relative;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+.section-title .title {
+  font-size: 30px;
+  line-height: 1.375;
 }
-
-.error {
-  color: red;
-  background: rgb(255, 238, 241);
-  border: 1px solid red;
-  border-radius: 4px;
-  padding: 8px;
-  margin: 10px 0;
+.purbleBtn{
+  background-color: #766df4 !important;
+  border: none !important;
+  padding: 0.8rem 1.6rem !important;
+  border-radius: 0.25rem !important;
 }
-
-/* section {
-  padding: 80px 18%;
-} */
+.purbleTxt{
+  color: #766df4 !important;
+}

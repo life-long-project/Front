@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useAxiosGet } from "../../hooks/useAxiosGet";
-import Loading from "../../Components/loadingPage/Loading";
+import Loading from "../loadingPage/Loading";
 import moment from "moment";
 import "./JobDetails.css";
 

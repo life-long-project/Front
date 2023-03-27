@@ -1,7 +1,5 @@
-import React, { useState } from "react";
 import profile from "./profile.jpg";
 import { BiCategoryAlt } from "react-icons/bi";
-import { Link, NavLink } from "react-router-dom";
 
 export default function ProfilePage() {
   return (

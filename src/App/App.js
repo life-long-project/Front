@@ -2,7 +2,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "../pages/home/Home";
 import Layout from "../Components/Layout/Layout";
 import "./App.css";
-import HomeJobsContextProvider from "../Context/HomeJobsContext";
 import JobDetails from "../pages/jobDetails/JobDetails";
 import CreateJob from "../pages/create/CreateJob";
 import ProfilePage from "../pages/ProfilePage/ProfilePage";
@@ -11,6 +10,7 @@ import Login from "../pages/login/Login";
 
 // chakra
 import { ChakraProvider } from "@chakra-ui/react";
+import LandingPage from "../pages/Landing Page/LandingPage";
 function App() {
   let routers = createBrowserRouter([
     {
@@ -19,6 +19,10 @@ function App() {
       children: [
         {
           index: true,
+          element: <LandingPage />,
+        },
+        {
+          path: "home",
           element: <Home />,
         },
         {
