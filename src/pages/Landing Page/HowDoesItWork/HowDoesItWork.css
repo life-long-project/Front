@@ -1,0 +1,24 @@
+.HowDoesItWork {
+  background-color: var(--dark-color);
+}
+.HowDoesItWorkMainText {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 50px;
+  line-height: 68px;
+  color: var(--second-color);
+  text-transform: capitalize;
+  width: 65%;
+}
+.HowDoesItWorkIcon {
+  color: var(--second-color);
+  font-size: 50px;
+}
+.HowDoesItWorkIconPartText {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  text-transform: capitalize;
+  color: #fff;
+}

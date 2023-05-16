@@ -1,0 +1,48 @@
+.SignInPage {
+  background-color: var(--bg-color) !important;
+}
+.SignInContent {
+  height: 90vh;
+  display: flex;
+  align-items: center;
+}
+.SignInForm{
+  min-width: 30%;
+}
+.SignInForm input {
+  background-color: #fff !important;
+  padding: 8px 16px;
+}
+.SignInForm select{
+  background-color: #fff;
+}
+.SignInForm option{
+  color: #000;
+}
+::placeholder{
+  color: #949494 !important;
+}
+select {
+  color: #949494;
+}
+option:not(:first-of-type) {
+  color: black;
+}
+
+.SignInForm option:first-child{
+  color: #949494;
+}
+.SignInForm .chakra-select__icon-wrapper{
+  color: var(--main-color);
+  margin-left: 50px;
+}
+.SignInInputLeftAddon {
+  color: var(--main-color);
+  background-color: #fff;
+}
+.SignInLoginTxt{
+  color: var(--main-color);
+}
+.SignInLoginTxt:hover{
+  color: var(--dark-color);
+}

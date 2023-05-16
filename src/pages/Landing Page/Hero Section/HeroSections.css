@@ -1,0 +1,54 @@
+.Hero-Section {
+  background-color: var(--main-color);
+  height: 90vh;
+}
+.HeroSectionMainText {
+  color: #fff;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 64px;
+  line-height: 68px;
+  text-transform: capitalize;
+  max-width: 90%;
+}
+.Hero-Section-Content {
+  height: 90vh;
+}
+.HeroSectionSubText {
+  font-style: normal;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 22px;
+  text-transform: capitalize;
+  color: #fff;
+}
+.SearchBarLeftIcons{
+  background-color: #fff !important;
+  color: var(--main-color);
+}
+.SearchBarLeftIconsNoBorder {
+  border-radius: 0px !important;
+  background-color: #fff !important;
+  color: var(--main-color);
+  background-color: #fff !important;
+}
+.SearchBarInputForm{
+  background-color: #fff !important;
+  border-radius: 0px !important;
+}
+.SearchBarInputForm:focus{
+  box-shadow: var(--fourth-color);
+}
+.HeroSectionSearchBarFormBtn {
+  background-color: var(--second-color);
+  color: #000;
+  padding: 0px 18px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 22px;
+  border-radius: 0px 6px 6px 0px;
+}
+.HeroSectionImage input[type="image"] {
+  height: 100%;
+}

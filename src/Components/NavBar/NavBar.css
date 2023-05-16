@@ -1,0 +1,15 @@
+.navBarDark {
+  background-color: var(--dark-color);
+}
+.nav-item a {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+}
+.navBarIcons{
+  font-size: 25px;
+  /* padding-bottom: 8px; */
+}
+.navbar-brand input{
+  cursor: pointer;
+}

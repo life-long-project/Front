@@ -1,0 +1,21 @@
+.HireOrGetHired {
+  background-color: var(--second-color);
+}
+.HireOrGetHiredDetailsMainText {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 64px;
+  line-height: 68px;
+  text-transform: capitalize;
+  color: var(--main-color);
+}
+.HireOrGetHiredDetailsSecondText {
+  font-style: normal;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 30px;
+  text-transform: capitalize;
+  color: var(--main-color);
+  width: 90%;
+}

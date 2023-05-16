@@ -1,0 +1,48 @@
+.signupPage {
+  background-color: var(--bg-color) !important;
+}
+.signupContent {
+  height: 90vh;
+  display: flex;
+  align-items: center;
+}
+.SignInContent{
+  min-width: 30%;
+}
+.signupForm input {
+  background-color: #fff !important;
+  padding: 8px 16px;
+}
+.signupForm select{
+  background-color: #fff;
+}
+.signupForm option{
+  color: #000;
+}
+::placeholder{
+  color: #949494 !important;
+}
+select {
+  color: #949494;
+}
+option:not(:first-of-type) {
+  color: black;
+}
+
+.signupForm option:first-child{
+  color: #949494;
+}
+.signupForm .chakra-select__icon-wrapper{
+  color: var(--main-color);
+  margin-left: 50px;
+}
+.SignUpInputLeftAddon {
+  color: var(--main-color);
+  background-color: #fff !important;
+}
+.SignupLoginTxt{
+  color: var(--main-color);
+}
+.SignupLoginTxt:hover{
+  color: var(--dark-color);
+}
