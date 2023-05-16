@@ -1,22 +1,69 @@
-.section {
-  padding-top: 80px;
-  padding-bottom: 80px;
-  position: relative;
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap");
+:root {
+  --black-color: #000;
+  --dark-color: #08090a;
+  --main-color: #0055d9;
+  --second-color: #5dfdcb;
+  --third-color: #7cc6fe;
+  --fourth-color: #A5ACBA;
+  --bg-color: #EDF5FF;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
-.section-title .title {
-  font-size: 30px;
-  line-height: 1.375;
+input[type="image"]{
+  cursor: default;
 }
-a{
-  text-decoration: none !important;
+.main-btn{
+  background-color: var(--main-color) !important;
+  color: #fff;
+  border-radius: 8px;
+  border: none;
+  padding: 12px 18px;
+  font-weight: 600;
+  font-style: italic;
 }
-.purbleBtn{
-  background-color: #766df4 !important;
-  border: none !important;
-  padding: 0.8rem 1.6rem !important;
-  border-radius: 0.25rem !important;
+.SecondBtnOutline{
+  background-color: transparent;
+  color: var(--main-color);
+  border: 1px solid var(--main-color);
+  padding: 6px 22px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  border-radius: 8px;
+  }
+.main-btn:hover{
+  background-color: transparent !important;
+  color: var(--main-color) !important;
+  border: 2px solid var(--main-color) !important;
+  padding: 10px 16px;
+  font-weight: 600;
+  font-style: italic;
 }
-.purbleTxt{
-  color: #766df4 !important;
+.SecondBtnOutline:hover{
+  background-color: var(--main-color);
+  color: #fff;
+}
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 22px;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
 }
