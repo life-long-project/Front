@@ -7,6 +7,7 @@ import SigninPage from "./Pages/Sign In Page/SigninPage";
 import { useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import useAuthContext from "./Hooks/useAuthContext";
+import CreateNewJob from "./Pages/Create New Job/CreateNewJob";
 
 
 function App() {
@@ -36,7 +37,12 @@ function App() {
         {
           path: "signin",
           element: <SigninPage/>
-        }
+        },
+        {
+          path: "create_new_job",
+          element: <CreateNewJob/>
+        },
+
       ]
     }
   ])

@@ -26,12 +26,13 @@ input[type="image"]{
 }
 .main-btn{
   background-color: var(--main-color) !important;
-  color: #fff;
-  border-radius: 8px;
-  border: none;
-  padding: 12px 18px;
-  font-weight: 600;
-  font-style: italic;
+  color: #fff !important;
+  border-radius: 8px !important;
+  border: none !important;
+  padding: 12px 18px !important;
+  font-weight: 600 !important;
+  font-style: italic !important;
+  max-width: max-content !important;
 }
 .SecondBtnOutline{
   background-color: transparent;
@@ -47,9 +48,9 @@ input[type="image"]{
   background-color: transparent !important;
   color: var(--main-color) !important;
   border: 2px solid var(--main-color) !important;
-  padding: 10px 16px;
-  font-weight: 600;
-  font-style: italic;
+  padding: 10px 16px !important;
+  font-weight: 600 !important;
+  font-style: italic !important;
 }
 .SecondBtnOutline:hover{
   background-color: var(--main-color);
