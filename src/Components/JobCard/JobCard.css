@@ -1,0 +1,95 @@
+.jobCard {
+  background-color: #ffff !important;
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin-bottom: 20px;
+}
+.jobHeaderImage {
+  width: 100px !important;
+}
+.jobHeaderImg {
+  width: 100% !important;
+  border-radius: 12px !important;
+}
+.JobcardBodyTitle h2 {
+  font-size: 22px !important;
+  font-weight: 600 !important;
+  line-height: 24px !important;
+  margin-bottom: 2px !important;
+}
+.jobTimeFrom {
+  font-size: 12px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 19px;
+  color: black;
+  margin-top: 0px;
+}
+.JobcardTypeBadge {
+  background-color: #ebedf0;
+  color: #001433;
+  padding: 8px 10px !important;
+  border-radius: 8px;
+  font-size: 14px !important;
+}
+.JobcardSkillsBadge {
+  background-color: #e1ebfb !important;
+  color: var(--main-color) !important;
+  padding: 8px 10px !important;
+  border-radius: 8px;
+}
+.jobCardPrice p:first-child {
+  font-size: 22px !important;
+  font-weight: 600 !important;
+  line-height: 22px !important;
+}
+.jobCardBodyPublisher {
+  font-size: 12px;
+  font-weight: 600;
+  font-style: normal;
+  letter-spacing: -0.27px;
+  line-height: 19px;
+  color: #001433;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+.jobCardBodyLocation {
+  font-size: 12px;
+  font-weight: 600;
+  font-style: normal;
+  letter-spacing: -0.27px;
+  line-height: 19px;
+}
+.jobCardBookmark{
+  background-color: #f1f1f1;
+  color: #000;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px !important;
+}
+.footerApplyBtn{
+  background-color: var(--main-color) !important;
+  color: #fff !important;
+  border-radius: 8px !important;
+  padding: 8px 0px;
+}
+.footerApplyBtn:hover{
+  background-color: transparent !important;
+  color: var(--main-color) !important;
+  border: 1px solid var(--main-color) !important;
+}
+.footerMsgBtn{
+  background-color: transparent !important;
+  color: var(--main-color) !important;
+  border: 1px solid var(--main-color) !important;
+  border-radius: 8px !important;
+  padding: 8px 0px;
+}
+.footerMsgBtn:hover{
+  background-color: var(--main-color) !important;
+  color: #fff !important;
+}

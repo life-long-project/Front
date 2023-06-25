@@ -1,8 +1,8 @@
 import React from 'react'
-import HeroSection from './Hero Section/HeroSection'
-import HireOrGetHired from './Hire Or Get Hired/HireOrGetHired'
+import HeroSection from './HeroSection/HeroSection'
+import HireOrGetHired from './HireOrGetHired/HireOrGetHired'
 import HowDoesItWork from './HowDoesItWork/HowDoesItWork'
-import UsersReviews from './Users Reviews/UsersReviews'
+import UsersReviews from './UsersReviews/UsersReviews'
 
 export default function LandingPage() {
   return (
