@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Jobs.css";
 import JobCard from "../../Components/JobCard/JobCard";
 import JobList from "../../Components/JobList/JobList";
+import { useAxiosGet } from "../../Hooks/useAxiosGet";
+import useAuthContext from "../../Hooks/useAuthContext";
 
 export default function Jobs() {
+  const [url, setUrl] = useState("https://back-ph2h.onrender.com/jobs");
+  const [search, setSearch] = useState("");
+  const [skills, setSkills] = useState("");
+  const { data, isPending, error } = useAxiosGet(url);
+  const { myuser } = useAuthContext();
+  console.log(myuser);
+
   return (
     <>
       <div className="container-fluid jobsBg">
@@ -14,7 +23,7 @@ export default function Jobs() {
           </div>
           <div className="col-lg-9">
             <section className="jobSection">
-              <JobList />
+              {data && <JobList jobs={data.jobs} />}
             </section>
           </div>
         </div>

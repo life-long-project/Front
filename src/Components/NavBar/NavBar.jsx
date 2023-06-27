@@ -122,7 +122,13 @@ export default function NavBar() {
                       <MenuList>
                         <MenuGroup title="Profile">
                           <MenuItem>My Account</MenuItem>
-                          <MenuItem onClick={()=>{logout()}}>Logout </MenuItem>
+                          <MenuItem
+                            onClick={() => {
+                              logout();
+                            }}
+                          >
+                            Logout{" "}
+                          </MenuItem>
                         </MenuGroup>
                         <MenuDivider />
                         <MenuGroup title="Help">

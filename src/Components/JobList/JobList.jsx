@@ -1,23 +1,17 @@
 import React from "react";
 import JobCard from "../JobCard/JobCard";
 
-export default function JobList() {
+export default function JobList({ jobs }) {
+  console.log(jobs);
   return (
     <>
-        <div className="row">
+      <div className="row">
+        {jobs.map((job, index) => (
           <div className="col-4">
-            <JobCard />
+            <JobCard key={index} job={job} />
           </div>
-          <div className="col-4">
-            <JobCard />
-          </div>
-          <div className="col-4">
-            <JobCard />
-          </div>
-          <div className="col-4">
-            <JobCard />
-          </div>
-        </div>
+        ))}
+      </div>
     </>
   );
 }

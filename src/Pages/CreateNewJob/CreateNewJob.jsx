@@ -15,13 +15,16 @@ import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
 import { useAxiosGet } from "../../Hooks/useAxiosGet";
 import axios from "axios";
+import useAuthContext from "../../Hooks/useAuthContext";
 
 export default function CreateNewJob() {
   const [skills, setSkills] = useState([]);
   const [cities, setCities] = useState([]);
-  const [type, setType] = useState({ value: "fullTime", label: "Full Time" });
+  const [type, setType] = useState({ value: "full-time", label: "Full Time" });
   const [submitLoading, setSubmitLoading] = useState(false);
   const [error, setError] = useState(false);
+  const { user } = useAuthContext();
+  console.log(user);
 
   const { data: skillsData } = useAxiosGet(
     "https://back-ph2h.onrender.com/jobs/skills"
@@ -67,7 +70,9 @@ export default function CreateNewJob() {
     setSubmitLoading(true);
     try {
       const postResponse = await axios.post(
-        `https://back-ph2h.onrender.com/jobs/`,
+        `https://back-ph2h.onrender.com/jobs/?auth_token=${localStorage.getItem(
+          "token"
+        )}`,
         jobData,
         {
           headers: { "Content-Type": "application/json" },
@@ -87,7 +92,7 @@ export default function CreateNewJob() {
     setType(selected);
   };
   const jobType = [
-    { value: "full-Time", label: "Full Time" },
+    { value: "full-time", label: "Full Time" },
     { value: "part-time", label: "Part Time" },
   ];
   const customStyles = {

@@ -16,7 +16,7 @@ export const useAxiosGet = (url) => {
         console.log(data);
         setIsPending(false);
         setData(data);
-        //setError(null);
+        setError(null);
       } catch (err) {
         setIsPending(false);
         setData(null);

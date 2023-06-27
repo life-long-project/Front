@@ -1,8 +1,12 @@
 import React from "react";
 import "./JobCard.css";
 import { BsBookmarkHeart } from "react-icons/bs";
+import { Link } from "react-router-dom";
+import useAuthContext from "../../Hooks/useAuthContext";
 
-export default function JobCard() {
+export default function JobCard({ job }) {
+  const { user } = useAuthContext();
+  console.log(job);
   return (
     <>
       <div className="jobCard">
@@ -61,7 +65,9 @@ export default function JobCard() {
             </div>
             <div className="col-6">
               <div className="JobcardFooterButton">
-                <button className="w-100 btn footerMsgBtn">Message</button>
+                <Link to="/chat" state={"title"}>
+                  <button className="w-100 btn footerMsgBtn">Message</button>
+                </Link>
               </div>
             </div>
           </div>
