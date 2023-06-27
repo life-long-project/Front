@@ -14,12 +14,12 @@ import ChatPage from "./Pages/ChatPage/ChatPage";
 function App() {
   const { setUser } = useAuthContext();
 
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      let decoded = jwt_decode(localStorage.getItem("token"));
-      setUser(decoded.user);
-    }
-  }, [setUser]);
+  // useEffect(() => {
+  //   if (localStorage.getItem("token")) {
+  //     let decoded = jwt_decode(localStorage.getItem("token"));
+  //     setUser(decoded.user);
+  //   }
+  // }, [setUser]);
 
   let routers = createBrowserRouter([
     {
