@@ -8,6 +8,7 @@ import { useGetByAction } from "../../Hooks/useGetByAction";
 import Conversation from "./chatComponents/conversation/Conversation";
 import Message from "./chatComponents/Message/Message";
 import axios from "axios";
+import ScrollToBottom from "react-scroll-to-bottom";
 
 //styles
 import "./ChatPage.css";
@@ -75,13 +76,7 @@ export default function ChatPage(props) {
         )}`,
         message
       );
-      getMessages(
-        `https://back-ph2h.onrender.com/conversation/${
-          currentChat._id
-        }/?auth_token=${localStorage.getItem("token")}`
-      );
-      console.log("sent");
-      setMessages([...MessagesRes.messages, res.data]);
+      setMessages({ messages: [...MessagesRes.messages, res.data] });
       setNewMessage("");
     } catch (err) {
       console.log(err);
@@ -115,15 +110,17 @@ export default function ChatPage(props) {
           {currentChat ? (
             <>
               <div className="chatBoxTop">
-                {MessagesLoading && <p>Fetching Your Messages...</p>}
-                {!MessagesLoading &&
-                  MessagesRes &&
-                  MessagesRes.messages.map((m) => (
-                    // ref={scrollRef}
-                    <div>
-                      <Message message={m} own={m.sender === user._id} />
-                    </div>
-                  ))}
+                <ScrollToBottom>
+                  {MessagesLoading && <p>Fetching Your Messages...</p>}
+                  {!MessagesLoading &&
+                    MessagesRes &&
+                    MessagesRes.messages.map((m) => (
+                      // ref={scrollRef}
+                      <div>
+                        <Message message={m} own={m.sender === user._id} />
+                      </div>
+                    ))}
+                </ScrollToBottom>
               </div>
               <div className="chatBoxBottom">
                 <textarea
