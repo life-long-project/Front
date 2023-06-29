@@ -25,5 +25,5 @@ export const useGetByAction = () => {
     console.log("hello");
   };
 
-  return { getData, data, isPending, error };
+  return { getData, setData, data, isPending, error };
 };
