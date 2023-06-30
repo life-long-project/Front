@@ -1,0 +1,11 @@
+.SearchBarJobPageButton{
+  background-color: var(--main-color);
+  color: #fff;
+  padding: 0px 32px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 22px;
+  border-radius: 0px 6px 6px 0px;
+
+}

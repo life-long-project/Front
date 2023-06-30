@@ -1,3 +1,4 @@
-.jobsBg{
+.EmptyPage{
+  min-height: 100vh !important;
   background-color: var(--bg-color) !important;
 }

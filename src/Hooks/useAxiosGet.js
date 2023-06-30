@@ -13,7 +13,6 @@ export const useAxiosGet = (url) => {
 
       try {
         let { data } = await axios.get(url);
-        console.log(data);
         setIsPending(false);
         setData(data);
         setError(null);

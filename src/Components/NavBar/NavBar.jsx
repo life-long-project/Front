@@ -115,7 +115,6 @@ export default function NavBar() {
                           <Avatar
                             className="navBarAvatar"
                             name={user.username}
-                            src="https://bit.ly/broken-link"
                           ></Avatar>
                         </Stack>
                       </MenuButton>
