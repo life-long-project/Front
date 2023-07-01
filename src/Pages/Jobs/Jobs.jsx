@@ -12,9 +12,12 @@ import Loading from "../LoadingPage/LoadingPage";
 export default function Jobs() {
   const [url, setUrl] = useState("https://back-ph2h.onrender.com/jobs");
   const [search, setSearch] = useState("");
-  const { data, isPending} = useAxiosGet(url);
+  const { data, isPending } = useAxiosGet(url);
+  const [values, setValues] = useState([]);
   // const [skills, setSkills] = useState("");
   // const { myuser } = useAuthContext();
+
+  console.log(values);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -34,7 +37,7 @@ export default function Jobs() {
         <div className="row">
           <div className="col-lg-3">
             <section className="filterSection">
-              <FilterBox />
+              <FilterBox values={values} setValues={setValues} />
             </section>
           </div>
           <div className="col-lg-9">
