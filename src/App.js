@@ -10,6 +10,7 @@ import useAuthContext from "./Hooks/useAuthContext";
 import CreateNewJob from "./Pages/CreateNewJob/CreateNewJob";
 import Jobs from "./Pages/Jobs/Jobs";
 import ChatPage from "./Pages/ChatPage/ChatPage";
+import JobDetails from "./Pages/JobDetails/JobDetails";
 
 function App() {
   const { setUser } = useAuthContext();
@@ -39,7 +40,7 @@ function App() {
           element: <SigninPage />,
         },
         {
-          path: "create_new_job",
+          path: "create-job",
           element: <CreateNewJob />,
         },
         {
@@ -49,6 +50,10 @@ function App() {
         {
           path: "chat",
           element: <ChatPage />,
+        },
+        {
+          path: "Job-Details/:id",
+          element: <JobDetails />,
         },
       ],
     },

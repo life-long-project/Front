@@ -31,6 +31,7 @@ export default function SearchJobs({ search, setSearch, handleSearch }) {
                 type="button"
                 className="SearchBarJobPageButton"
                 value="Search"
+                onClick={handleSearch}
               />
             </InputGroup>
           </form>

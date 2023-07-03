@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./HeroSections.css";
 import {
   Input,
@@ -9,8 +9,17 @@ import {
 } from "@chakra-ui/react";
 import { BsSearch } from "react-icons/bs";
 import { BiCurrentLocation } from "react-icons/bi";
+import { useAxiosGet } from "../../../Hooks/useAxiosGet";
+import { Link } from "react-router-dom";
 
 export default function HeroSection() {
+  const [selectedCity, setSelectedCity] = useState("");
+  const [searchWord, setSearchWord] = useState("");
+
+  const { data: citiesData } = useAxiosGet(
+    "https://back-ph2h.onrender.com/cities"
+  );
+
   return (
     <>
       <section className="Hero-Section">
@@ -36,23 +45,39 @@ export default function HeroSection() {
                           className="SearchBarInputForm"
                           type="text"
                           placeholder="Job, Company name..."
+                          onChange={(e) => {
+                            setSearchWord(e.target.value);
+                          }}
                         />
                         <InputLeftAddon
                           className="SearchBarLeftIconsNoBorder"
                           children={<BiCurrentLocation />}
                         />
                         <Select
-                          placeholder="Select country"
+                          size="lg"
+                          placeholder="City"
                           className="SearchBarInputForm"
+                          onChange={(e) => {
+                            setSelectedCity(e.target.value);
+                          }}
                         >
-                          <option>United Arab Emirates</option>
-                          <option>Nigeria</option>
+                          {citiesData &&
+                            citiesData.map((city, key) => {
+                              return (
+                                <option key={key} value={city}>
+                                  {city}
+                                </option>
+                              );
+                            })}
                         </Select>
-                        <input
-                          type="button"
-                          className="HeroSectionSearchBarFormBtn"
-                          value="Search"
-                        />
+
+                        <Link to="/jobs" state={{searchWord, selectedCity}} className="HeroSectionSearchBarFormBtn d-flex justify-content-center">
+                          <input
+                            type="button"
+                            className="HeroSectionSearchBarFormBtn"
+                            value="Search"
+                          />
+                        </Link>
                       </InputGroup>
                     </Stack>
                   </div>

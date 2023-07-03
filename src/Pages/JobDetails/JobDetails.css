@@ -1,0 +1,168 @@
+.jobDescriptionSection{
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 1px 3px #12151b29;
+  padding-top: 28px;
+}
+.jobDescriptionHeaderCreatedOn{
+  color: #6e6e6e;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+.jobDescriptionHeaderTitle{
+  color: #000;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.jobDescriptionHeaderTypeAndApply{
+  color: #6e6e6e;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+.jobDescriptionHeaderBtnSection{
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+.jobDescriptionShareBtn,
+.jobDescriptionBookmarkBtn{
+  background-color: #f1f1f1;
+  border-radius: 8px;
+  color: #6e6e6e;
+  font-weight: 400;
+  line-height: 1.5;
+  padding: 8px 16px;
+  font-size: 20px;
+}
+.jobDescriptionApplyBtn{
+  background-color: #53BA51;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 400;
+  line-height: 1.5;
+  padding: 4px 16px;
+  font-size: 18px;
+}
+.carousel,
+.carousel input{
+  max-height: 335px !important;
+}
+.jobDescriptionHeaderFooter{
+  background-color: #F8FBFF;
+  border-radius: 0px 0px 16px 16px;
+}
+.jobDescriptionFooterIcon{
+  font-size: 50px;
+  font-weight: 400;
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  width: 100px;
+  padding: 16px;
+  border-radius: 50%;
+}
+.jobDescriptionFooterText{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+  height: 100%;
+}
+.jobDescriptionHeaderFooterItemTitle{
+  color: #000;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.jobDescriptionHeaderFooterItemSubTitle{
+  color: #6e6e6e;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+.Icon1{
+  color: #489D5C;
+  background-color: #D4E8DD;
+}
+.Icon2{
+  color: #F9A04A;
+  background-color: #FCEAD2;
+}
+.Icon3{
+  color: #8772DA;
+  background-color: #DED9F9;
+}
+.css-1xhq01z{
+  width: fit-content !important;
+  border-bottom-width: 8px !important;
+}
+.css-52dxnr[aria-selected=true], .css-52dxnr[data-selected]{
+  --tabs-color: var(--main-color) !important;
+  border-color: var(--main-color) !important;
+}
+.css-52dxnr{
+  font-weight: 600 !important;
+  color: #6e6e6e !important;
+  border-bottom: 8px solid !important;
+  margin-bottom: -8px !important;
+  border-color: var(--chakra-colors-transparent) !important;
+  background: var(--tabs-bg);
+}
+.jobDescriptionDetailsText{
+  padding-left: 8px;
+  color: #000;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  margin-top: 20px;
+}
+.sidebarwedgitImage{
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  text-align: center;
+  margin: 0px auto;
+}
+.sidebarwedgitName{
+  color: #000;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: center;
+  border-bottom: solid 2px var(--bg-color);
+  padding-bottom: 8px;
+}
+.sidebarJobTitle{
+  color: #000;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.5;
+  padding: 16px 10px;
+  border: solid 2px var(--bg-color);
+  border-radius: 8px;
+}
+.sidebarJobTitle:hover{
+  background-color: var(--main-color);
+  color: #fff;
+  border-color: var(--main-color);
+}
+@media screen and (max-width: 768px) {
+  .jobDescriptionFooterText{
+    align-items: center;
+    text-align: center;
+  }
+  .jobDescriptionHeaderBtnSection{
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0px;
+  }
+  .jobDescriptionHeaderCreatedOn{
+    font-size: 12px;
+  }
+}

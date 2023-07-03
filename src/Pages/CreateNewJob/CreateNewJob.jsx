@@ -55,7 +55,7 @@ export default function CreateNewJob() {
     type: "",
     location: "",
     salary: "",
-    duration: "",
+    duration: "0",
   });
 
   function getInputData(e) {
@@ -113,6 +113,7 @@ export default function CreateNewJob() {
                 <Input
                   type="text"
                   size="lg"
+                  className="bg-white"
                   placeholder="Job Title"
                   name="title"
                   id="title"
@@ -123,6 +124,7 @@ export default function CreateNewJob() {
                 <Textarea
                   placeholder="Job Description"
                   size="lg"
+                  className="bg-white"
                   name="description"
                   id="description"
                   onChange={(e) => {
@@ -171,6 +173,7 @@ export default function CreateNewJob() {
                           placeholder="Enter Duration (Days)"
                           name="duration"
                           id="duration"
+                          className="bg-white"
                           onChange={getInputData}
                         />
                       </NumberInput>
@@ -196,6 +199,7 @@ export default function CreateNewJob() {
                     placeholder="Enter Salary (LE)"
                     name="salary"
                     id="salary"
+                    className="bg-white"
                     onChange={getInputData}
                   />
                 </NumberInput>

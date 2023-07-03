@@ -1,23 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Jobs.css";
-import JobList from "../../Components/JobList/JobList";
 import { useAxiosGet } from "../../Hooks/useAxiosGet";
 import FilterBox from "./FilterBox/FilterBox";
 import SearchJobs from "./SearchJobs/SearchJobs";
 import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import Loading from "../LoadingPage/LoadingPage";
+import JobList from "./JobList/JobList";
+import { useLocation } from "react-router-dom";
 // import useAuthContext from "../../Hooks/useAuthContext";
 
 export default function Jobs() {
-  const [url, setUrl] = useState("https://back-ph2h.onrender.com/jobs");
-  const [search, setSearch] = useState("");
+  const location = useLocation();
+  const [url, setUrl] = useState(
+    `https://back-ph2h.onrender.com/jobs/?job_location=${
+      location.state ? location.state.selectedCity : ""
+    }&search=${location.state? location.state.searchWord : ""}`
+  );
   const { data, isPending } = useAxiosGet(url);
+  const [search, setSearch] = useState("");
   const [values, setValues] = useState([]);
   // const [skills, setSkills] = useState("");
   // const { myuser } = useAuthContext();
 
-  console.log(values);
+  useEffect(() => {
+    if( location.state ){
+      setSearch(location.state.searchWord);
+    }
+  }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -26,7 +36,7 @@ export default function Jobs() {
 
   return (
     <>
-      <div className="container-fluid jobsBg">
+      <div className="container jobsBg">
         <div className="row py-4">
           <SearchJobs
             search={search}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./SignUp.css";
 import {
   Box,
@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import useSignup from "../../Hooks/useSignup";
+import { useAxiosGet } from "../../Hooks/useAxiosGet";
 
 // let userData = {
 //   email: "admin@admin.com",
@@ -27,12 +28,37 @@ import useSignup from "../../Hooks/useSignup";
 
 export default function SignUp() {
   const { signUp, loading, error } = useSignup();
-  const [show, setShow] = useState(false);
-  const handleClick = () => setShow(!show); //Password Show Hide Chakra UI
+  const [showPw, setShowPw] = useState(false);
+  const [showRePw, setShowRePw] = useState(false);
+  const handleClickPw = () => setShowPw(!showPw); //Password Show Hide Chakra UI
+  const handleClickRePw = () => setShowRePw(!showRePw); //Password Show Hide Chakra UI
 
-  const [email, setEmail] = useState("");
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [userName, setUserName] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [confirm_password, setConfirm_password] = useState("");
+  // const [cities, setCities] = useState([]);
+
+  const [userData, setUserData] = useState({
+    f_name: "",
+    l_name: "",
+    email: "",
+    password: "",
+    confirm_password: "",
+    phone: "",
+    gender: "",
+    city: "",
+  });
+
+  function getInputData(e) {
+    let user = { ...userData };
+    user[e.target.name] = e.target.value;
+    setUserData(user);
+  }
+
+  const { data: citiesData } = useAxiosGet(
+    "https://back-ph2h.onrender.com/cities"
+  );
 
   return (
     <>
@@ -43,46 +69,68 @@ export default function SignUp() {
               <HStack className="mb-2">
                 <Box>
                   <FormControl id="firstName">
-                    <Input type="text" size="lg" placeholder="First Name*" />
+                    <Input
+                      type="text"
+                      size="lg"
+                      placeholder="First Name*"
+                      name="f_name"
+                      onChange={getInputData}
+                    />
                   </FormControl>
                 </Box>
                 <Box>
                   <FormControl id="lastName">
-                    <Input type="text" size="lg" placeholder="Last Name" />
+                    <Input
+                      type="text"
+                      size="lg"
+                      placeholder="Last Name"
+                      name="l_name"
+                      onChange={getInputData}
+                    />
                   </FormControl>
                 </Box>
               </HStack>
-              <FormControl className="mb-2" id="userName" isRequired>
-                <Input
-                  type="text"
-                  size="lg"
-                  placeholder="Username*"
-                  name="hidden"
-                  value={userName}
-                  onChange={(e) => setUserName(e.target.value)}
-                />
-              </FormControl>
               <FormControl className="mb-2" id="email" isRequired>
                 <Input
                   type="email"
                   size="lg"
                   placeholder="Email address*"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  name="email"
+                  value={userData.email}
+                  onChange={getInputData}
                 />
               </FormControl>
               <InputGroup size="lg" className="mb-2">
                 <Input
                   pr="4.5rem"
-                  type={show ? "text" : "password"}
+                  type={showPw ? "text" : "password"}
                   placeholder="Enter password"
                   isRequired
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  name="password"
+                  id="password"
+                  value={userData.password}
+                  onChange={getInputData}
                 />
                 <InputRightElement width="4.5rem">
-                  <Button h="1.75rem" size="sm" onClick={handleClick}>
-                    {show ? "Hide" : "Show"}
+                  <Button h="1.75rem" size="sm" onClick={handleClickPw}>
+                    {showPw ? "Hide" : "Show"}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+              <InputGroup size="lg" className="mb-2">
+                <Input
+                  pr="4.5rem"
+                  type={showRePw ? "text" : "password"}
+                  placeholder="Re Enter password"
+                  isRequired
+                  id="confirm_password"
+                  name="confirm_password"
+                  value={userData.confirm_password}
+                  onChange={getInputData}
+                />
+                <InputRightElement width="4.5rem">
+                  <Button h="1.75rem" size="sm" onClick={handleClickRePw}>
+                    {showRePw ? "Hide" : "Show"}
                   </Button>
                 </InputRightElement>
               </InputGroup>
@@ -91,20 +139,53 @@ export default function SignUp() {
                   className="SignUpInputLeftAddon"
                   children="+20"
                 />
-                <Input type="tel" placeholder="phone number" size="lg" />
+                <Input
+                  type="tel"
+                  placeholder="Phone Number"
+                  id="phone"
+                  size="lg"
+                  name="phone"
+                  onChange={getInputData}
+                />
               </InputGroup>
               <HStack className="mb-2">
                 <Box className="w-50">
-                  <Select size="lg" placeholder="City">
-                    <option value="option2">Tanta Zifta Mit Ghamr</option>
-                    <option value="option3">Option 3</option>
-                  </Select>{" "}
+                  <Select
+                    size="lg"
+                    placeholder="City"
+                    onChange={(e) => {
+                      setUserData((prev) => ({
+                        ...prev,
+                        city: e.target.value,
+                      }));
+                    }}
+                  >
+                    {citiesData &&
+                      citiesData.map((city, key) => {
+                        return (
+                          <option key={key} value={city}>
+                            {city}
+                          </option>
+                        );
+                      })}
+                  </Select>
                 </Box>
                 <Box className="w-50">
-                  <Select size="lg" placeholder="Feilds of Expertise">
-                    <option value="option2">Tanta Zifta Mit Ghamr</option>
-                    <option value="option3">Option 3</option>
-                  </Select>{" "}
+                  <FormControl id="gender">
+                    <Select
+                      size="lg"
+                      placeholder="Gender"
+                      onChange={(e) => {
+                        setUserData((prev) => ({
+                          ...prev,
+                          gender: e.target.value,
+                        }));
+                      }}
+                    >
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                    </Select>
+                  </FormControl>
                 </Box>
               </HStack>
             </FormControl>
@@ -114,7 +195,7 @@ export default function SignUp() {
                 size="lg"
                 className="main-btn"
                 isLoading={loading}
-                onClick={() => signUp({ email, password, userName })}
+                onClick={() => signUp(userData)}
               >
                 Sign up
               </Button>

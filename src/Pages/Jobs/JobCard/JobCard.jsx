@@ -1,15 +1,14 @@
 import React from "react";
 import "./JobCard.css";
-import {
-  BsBookmarkCheck,
-  BsBookmarkCheckFill,
-} from "react-icons/bs";
+import { BsBookmarkCheck, BsBookmarkCheckFill } from "react-icons/bs";
 import { format } from "timeago.js";
 // import useAuthContext from "../../Hooks/useAuthContext";
 import { Avatar, WrapItem } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 export default function JobCard({ job }) {
   // const { user } = useAuthContext();
+  const navigate = useNavigate();
   return (
     <>
       <div className="jobCard shadow">
@@ -25,7 +24,7 @@ export default function JobCard({ job }) {
         )}
         <div className="JobcardHeader mb-0">
           <div className="row">
-            <div className="col-4">
+            <div className="col-5">
               <div className="jobHeaderImage mb-1">
                 {job.job_img_url === null ? (
                   <WrapItem>
@@ -44,7 +43,7 @@ export default function JobCard({ job }) {
                 )}
               </div>
             </div>
-            <div className="col-8">
+            <div className="col-7">
               <div className="jobCardPrice h-100 m-auto d-flex flex-column align-items-start justify-content-center">
                 <p className="mb-2">
                   {job.salary} LE / {job.job_type === "fulltime" ? "Mo" : "Hr"}
@@ -70,7 +69,7 @@ export default function JobCard({ job }) {
           </div>
 
           <div className="JobcardBodyDescription text-muted mb-3">
-            {job.job_description.substring(0, 50) + "..."}
+            {job.job_description.substring(0, 35) + "..."}
           </div>
           <div className="JobcardBodySkills mb-3">
             {job.job_skills
@@ -86,7 +85,12 @@ export default function JobCard({ job }) {
           <div className="row">
             <div className="col-12">
               <div className="JobcardFooterButton">
-                <button className="w-100 btn footerApplyBtn">Apply</button>
+                <button
+                  className="w-100 btn footerApplyBtn"
+                  onClick={() => navigate(`/job-details/${job._id}`)}
+                >
+                  See Details
+                </button>
               </div>
             </div>
             <div className="col-lg-6">
