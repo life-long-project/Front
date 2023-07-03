@@ -9,6 +9,7 @@ import Conversation from "./chatComponents/conversation/Conversation";
 import Message from "./chatComponents/Message/Message";
 import axios from "axios";
 import ScrollToBottom from "react-scroll-to-bottom";
+import { io } from "socket.io-client";
 
 //styles
 import "./ChatPage.css";
@@ -18,7 +19,40 @@ export default function ChatPage(props) {
   // const location = useLocation();
   const [currentChat, setCurrentChat] = useState(null);
   const [newMessage, setNewMessage] = useState("");
+  const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [onlineUsers, setOnlineUsers] = useState([]);
+  const socket = useRef();
   // let decoded = jwt_decode(localStorage.getItem("token"));
+
+  // socket init
+  useEffect(() => {
+    socket.current = io("https://back-ph2h.onrender.com");
+    socket.current.on("newMessage", (data) => {
+      console.log(data.text);
+      setArrivalMessage({
+        sender: data.senderId,
+        text: data.text,
+        createdAt: Date.now(),
+      });
+    });
+  }, []);
+  console.log(arrivalMessage);
+  useEffect(() => {
+    arrivalMessage &&
+      currentChat?.members.includes(arrivalMessage.sender) &&
+      setMessages({ messages: [...MessagesRes.messages, arrivalMessage] });
+  }, [arrivalMessage, currentChat]);
+
+  useEffect(() => {
+    if (user) {
+    socket.current.emit("addUser", user._id);
+    socket.current.on("getUsers", (users) => {
+      // setOnlineUsers(
+      //   user.followings.filter((f) => users.some((u) => u.userId === f))
+      // );
+    })
+  }
+  }, [user, currentChat]);
 
   // invoking hook used to get conversations for current user
   const {
@@ -40,7 +74,7 @@ export default function ChatPage(props) {
       );
     }
   }, [user]);
-
+  console.log(user);
   // invoking hook to get messages for current converstation
   const {
     getData: getMessages,
@@ -59,15 +93,16 @@ export default function ChatPage(props) {
       text: newMessage,
     };
 
-    // const receiverId = currentChat.members.find(
-    //   (member) => member !== user._id
-    // );
+    const receiverId = currentChat.members.find(
+      (member) => member !== user._id
+    );
 
-    // socket.current.emit("sendMessage", {
-    //   senderId: user._id,
-    //   receiverId,
-    //   text: newMessage,
-    // });
+    socket.current.emit("sendMessage", {
+      conversationId: currentChat._id,
+      senderId: user._id,
+      receiverId,
+      text: newMessage,
+    });
     console.log(message);
     try {
       const res = await axios.post(
@@ -89,7 +124,7 @@ export default function ChatPage(props) {
         <div className="chatMenuWrapper">
           <input placeholder="Search for friends" className="chatMenuInput" />
           {conversatonsRes &&
-            conversatonsRes.conversations.map((c) => (
+            conversatonsRes.conversations?.map((c) => (
               <div
                 onClick={() => {
                   setCurrentChat(c);
