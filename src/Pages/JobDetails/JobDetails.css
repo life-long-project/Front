@@ -151,6 +151,10 @@
   color: #fff;
   border-color: var(--main-color);
 }
+.jobDescriptionSkills{
+  border-top: 2px solid var(--bg-color);
+  margin-top: 18px;
+}
 @media screen and (max-width: 768px) {
   .jobDescriptionFooterText{
     align-items: center;

@@ -13,7 +13,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useSignup from "../../Hooks/useSignup";
 import { useAxiosGet } from "../../Hooks/useAxiosGet";
 
@@ -32,6 +32,13 @@ export default function SignUp() {
   const [showRePw, setShowRePw] = useState(false);
   const handleClickPw = () => setShowPw(!showPw); //Password Show Hide Chakra UI
   const handleClickRePw = () => setShowRePw(!showRePw); //Password Show Hide Chakra UI
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem("token") != null) {
+      navigate("/jobs");
+    }
+  }, []);
 
   // const [email, setEmail] = useState("");
   // const [userName, setUserName] = useState("");
@@ -195,7 +202,12 @@ export default function SignUp() {
                 size="lg"
                 className="main-btn"
                 isLoading={loading}
-                onClick={() => signUp(userData)}
+                onClick={() => {
+                  signUp(userData);
+                  if (localStorage.getItem("token") != null) {
+                    navigate("/jobs");
+                  }
+                }}
               >
                 Sign up
               </Button>

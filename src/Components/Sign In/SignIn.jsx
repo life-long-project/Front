@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./SignIn.css";
 import {
   FormControl,
@@ -11,7 +11,7 @@ import {
   Checkbox,
   HStack,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import useLogin from "../../Hooks/useLogin";
@@ -22,6 +22,14 @@ export default function SignIn() {
   const handleClick = () => setShow(!show); //Password Show Hide Chakra UI
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("token") != null) {
+      navigate("/jobs");
+    }
+  }, []);
 
   return (
     <>
@@ -64,9 +72,14 @@ export default function SignIn() {
               <Button
                 loadingText="Logining..."
                 size="lg"
-                className="main-btn" 
+                className="main-btn"
                 isLoading={loading}
-                onClick={() => logIn({ email, password })}
+                onClick={() => {
+                  logIn({ email, password });
+                  if (localStorage.getItem("token") != null) {
+                    navigate("/jobs");
+                  }
+                }}
               >
                 Sign In
               </Button>

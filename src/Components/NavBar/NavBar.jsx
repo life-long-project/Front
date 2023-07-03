@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./NavBar.css";
 import { IoNotificationsSharp } from "react-icons/io5";
 import { RiMessage2Fill } from "react-icons/ri";
@@ -11,6 +11,7 @@ import useLogout from "../../Hooks/useLogout";
 export default function NavBar() {
   const { user } = useAuthContext();
   const { logout } = useLogout();
+  const navigate = useNavigate();
   return (
     <>
       <nav className="navbar navbar-dark navbar-expand-lg navBarDark py-3">
@@ -41,8 +42,8 @@ export default function NavBar() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link text-white" to="/">
-                  Careers
+                <Link className="nav-link text-white" to="/jobs">
+                  Explore Jobs
                 </Link>
               </li>
               <li className="nav-item">
@@ -121,6 +122,11 @@ export default function NavBar() {
                       <MenuList>
                         <MenuGroup title="Profile">
                           <MenuItem>My Account</MenuItem>
+                          <MenuItem onClick={
+                            () => {
+                              navigate("/create-job")
+                            }
+                          }>Add New Job</MenuItem>
                           <MenuItem
                             onClick={() => {
                               logout();
@@ -128,11 +134,6 @@ export default function NavBar() {
                           >
                             Logout{" "}
                           </MenuItem>
-                        </MenuGroup>
-                        <MenuDivider />
-                        <MenuGroup title="Help">
-                          <MenuItem>Docs</MenuItem>
-                          <MenuItem>FAQ</MenuItem>
                         </MenuGroup>
                       </MenuList>
                     </Menu>

@@ -32,21 +32,26 @@ export default function JobDetails() {
                   <div className="row">
                     <div className="col-lg-8 px-5">
                       <p className="jobDescriptionHeaderCreatedOn mb-2">
-                        Created on {moment(job[0].createdAt).format("LLLL")} -
-                        Last updated on{" "}
-                        {moment(job[0].updatedAt)
+                        {job[0].createdAt === job[0].updatedAt
+                          ? `Created on ${moment(job[0].createdAt).format(
+                              "LLLL"
+                            )}`
+                          : `  
+                      Created on ${moment(job[0].createdAt).format("LLLL")} -
+                        Last updated on
+                        ${moment(job[0].updatedAt)
                           .subtract(1, "days")
-                          .calendar()}
+                          .calendar()}`}
                       </p>
                       <h1 className="jobDescriptionHeaderTitle mb-2">
                         {job[0].job_name}
                       </h1>
                       <p className="jobDescriptionHeaderTypeAndApply mb-3">
-                        <span className="jobDescriptionHeaderType">
-                          Full Time -{" "}
+                        <span className="jobDescriptionHeaderType text-capitalize">
+                          {job[0].job_type}-{" "}
                         </span>
                         <span className="jobDescriptionHeaderApply">
-                          24 Apply
+                          {job[0].offers.length} Apply
                         </span>
                       </p>
                     </div>
@@ -223,6 +228,21 @@ export default function JobDetails() {
                         <p className="jobDescriptionDetailsText">
                           {job[0].job_description}
                         </p>
+                        <div className="jobDescriptionSkills pt-3">
+                          <div className="JobcardBodySkills">
+                            <span>Job Skills : </span>
+                            {job[0].job_skills
+                              .map((skill, key) => (
+                                <span
+                                  className="JobcardSkillsBadge me-2"
+                                  key={key}
+                                >
+                                  {skill}
+                                </span>
+                              ))
+                              .slice(0, 2)}
+                          </div>
+                        </div>
                       </TabPanel>
                       <TabPanel>
                         <p>two!</p>
@@ -238,12 +258,12 @@ export default function JobDetails() {
                       <input
                         type="image"
                         className="w-100 rounded-3"
-                        src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                        src={job[0].user.profile_url}
                         alt="User Image"
                       />
                     </div>
                     <div className="sidebarwedgitTitle mb-2">
-                      <h5 className="text-center">Company Name</h5>
+                      <h5 className="text-center">{job[0].user.full_name}</h5>
                     </div>
                     <div className="sidebarwedgitLocation mb-2">
                       <p className="text-center">
@@ -251,7 +271,7 @@ export default function JobDetails() {
                           {" "}
                           <ImLocation className="d-inline" />
                         </span>{" "}
-                        Cairo
+                        {job[0].user.city}
                       </p>
                     </div>
                     <div className="sidebarwedgitBio mb-2">
