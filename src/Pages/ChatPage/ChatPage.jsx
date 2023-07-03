@@ -45,13 +45,13 @@ export default function ChatPage(props) {
 
   useEffect(() => {
     if (user) {
-    socket.current.emit("addUser", user._id);
-    socket.current.on("getUsers", (users) => {
-      // setOnlineUsers(
-      //   user.followings.filter((f) => users.some((u) => u.userId === f))
-      // );
-    })
-  }
+      socket.current.emit("addUser", user._id);
+      socket.current.on("getUsers", (users) => {
+        // setOnlineUsers(
+        //   user.followings.filter((f) => users.some((u) => u.userId === f))
+        // );
+      });
+    }
   }, [user, currentChat]);
 
   // invoking hook used to get conversations for current user
