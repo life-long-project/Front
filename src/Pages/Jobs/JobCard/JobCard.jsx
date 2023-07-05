@@ -7,11 +7,12 @@ import { Avatar, WrapItem } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
 export default function JobCard({ job }) {
+  console.log(job);
   // const { user } = useAuthContext();
   const navigate = useNavigate();
   return (
     <>
-      <div className="jobCard shadow">
+      <div className="jobCard">
         {true && (
           <div className="jobCardBookmark">
             <BsBookmarkCheckFill />
@@ -26,11 +27,11 @@ export default function JobCard({ job }) {
           <div className="row">
             <div className="col-5">
               <div className="jobHeaderImage mb-1">
-                {job.job_img_url === null ? (
+                {job.user.profile_url === null ? (
                   <WrapItem>
                     <Avatar
                       size="xl"
-                      name={job.user.f_name + " " + job.user.lname}
+                      name={job.user.full_name}
                     />
                   </WrapItem>
                 ) : (
@@ -38,7 +39,7 @@ export default function JobCard({ job }) {
                     type="image"
                     className="jobHeaderImg "
                     alt="Logo Image"
-                    src={job.job_img_url}
+                    src={job.user.profile_url}
                   />
                 )}
               </div>

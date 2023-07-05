@@ -15,6 +15,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import useLogin from "../../Hooks/useLogin";
+import useAuthContext from "../../Hooks/useAuthContext";
 
 export default function SignIn() {
   const { logIn, loading, error } = useLogin();
@@ -22,6 +23,7 @@ export default function SignIn() {
   const handleClick = () => setShow(!show); //Password Show Hide Chakra UI
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { user } = useAuthContext();
 
   const navigate = useNavigate();
 
@@ -29,7 +31,7 @@ export default function SignIn() {
     if (localStorage.getItem("token") != null) {
       navigate("/jobs");
     }
-  }, []);
+  }, [user]);
 
   return (
     <>

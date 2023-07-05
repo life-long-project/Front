@@ -1,9 +1,11 @@
 .jobCard {
   background-color: #ffff !important;
-  border-radius: 12px;
   padding: 18px 20px;
   margin-bottom: 20px;
   position: relative;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px #12151b29;
+
 }
 .jobHeaderImage {
   width: 100px !important;

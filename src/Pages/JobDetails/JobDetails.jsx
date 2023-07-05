@@ -1,18 +1,28 @@
 import React from "react";
 import "./JobDetails.css";
 import { HiShare } from "react-icons/hi";
-import { BsBookmark } from "react-icons/bs";
+import { BsBookmark, BsStar, BsStarFill } from "react-icons/bs";
 import { FaCoins } from "react-icons/fa";
 import { ImLocation } from "react-icons/im";
 import { CgWorkAlt } from "react-icons/cg";
 import { TbSquareDot } from "react-icons/tb";
 import { useAxiosGet } from "../../Hooks/useAxiosGet";
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
+import {
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import LoadingPage from "../LoadingPage/LoadingPage";
 import moment from "moment";
+import Rating from "react-rating";
+import ApplyNewOffer from "../../Components/ApplyNewOffer/ApplyNewOffer";
 
 export default function JobDetails() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { id } = useParams();
   const {
     data: job,
@@ -27,6 +37,12 @@ export default function JobDetails() {
           {isPending && <LoadingPage />}
           {job && (
             <>
+              <ApplyNewOffer
+                isOpen={isOpen}
+                onOpen={onOpen}
+                onClose={onClose}
+                job={job[0]}
+              />
               <div className="col-lg-8">
                 <div className="jobDescriptionHeader jobDescriptionSection mb-5">
                   <div className="row">
@@ -48,7 +64,10 @@ export default function JobDetails() {
                       </h1>
                       <p className="jobDescriptionHeaderTypeAndApply mb-3">
                         <span className="jobDescriptionHeaderType text-capitalize">
-                          {job[0].job_type}-{" "}
+                          {job[0].job_type === "full-time"
+                            ? "Full Time"
+                            : "Part Time"}{" "}
+                          -{" "}
                         </span>
                         <span className="jobDescriptionHeaderApply">
                           {job[0].offers.length} Apply
@@ -64,7 +83,7 @@ export default function JobDetails() {
                           <BsBookmark />
                         </div>
                         <div className="jobDescriptionApplyBtn me-3">
-                          <span>Apply</span>
+                          <button onClick={onOpen}>Apply</button>
                         </div>
                       </div>
                     </div>
@@ -202,7 +221,7 @@ export default function JobDetails() {
                             <div className="col-lg-6">
                               <div className="jobDescriptionFooterText">
                                 <p className="jobDescriptionHeaderFooterItemTitle my-2">
-                                  15.000
+                                  {job[0].required_experience}
                                 </p>
                                 <p className="jobDescriptionHeaderFooterItemSubTitle">
                                   Experience
@@ -275,9 +294,14 @@ export default function JobDetails() {
                       </p>
                     </div>
                     <div className="sidebarwedgitBio mb-2">
-                      <p className="text-center text-muted">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Cupiditate, id.
+                      <p className="text-center ratingP mb-0 d-flex align-items-center justify-content-center">
+                        <Rating
+                          emptySymbol={<BsStar className="text-muted" />}
+                          fullSymbol={<BsStarFill className="text-warning" />}
+                          fractions={2}
+                          readonly
+                          initialRating={job[0].user.total_rating}
+                        />
                       </p>
                     </div>
                   </div>

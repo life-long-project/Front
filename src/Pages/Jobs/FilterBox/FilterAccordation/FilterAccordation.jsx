@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./FilterAccordation.css";
 import {
   Accordion,
   AccordionButton,
@@ -26,7 +27,7 @@ export default function FilterAccordation({
   return (
     <>
       <Accordion defaultIndex={[0]} allowMultiple>
-        <AccordionItem>
+        <AccordionItem className="filterBoxAccordation">
           <h2>
             <AccordionButton>
               <Box as="span" flex="1" textAlign="left" className="fw-bold">
