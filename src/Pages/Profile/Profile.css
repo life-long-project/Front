@@ -1,0 +1,41 @@
+.profile {
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 1px 3px #12151b29;
+  padding: 32px;
+}
+.profile-img {
+  width: 250px;
+  height: 250px;
+  overflow: hidden;
+  padding: 0px 16px;
+}
+.profile-img img {
+  width: 100%;
+  height: 100%;
+  border-radius: 18px;
+  object-fit: cover;
+}
+.profile-user-personal-details ul,
+.profile-user-personal-details li {
+  list-style: none;
+  padding: 10px 0px;
+  border: none !important;
+}
+.ratingProfile,
+.rating-Profile {
+  font-size: 22px;
+}
+.ratingProfile svg {
+  margin: 0px 2px;
+}
+.emptySymbol {
+  color: #bcc5d3;
+}
+.fullSymbol {
+  color: #53ba51;
+}
+.ai-dollar-icon {
+  color: #53ba51;
+  font-size: 24px;
+}

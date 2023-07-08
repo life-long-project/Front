@@ -13,6 +13,7 @@ import ChatPage from "./Pages/ChatPage/ChatPage";
 import JobDetails from "./Pages/JobDetails/JobDetails";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import Error404 from "./Pages/Error404/Error404";
+import Profile from "./Pages/Profile/Profile";
 
 function App() {
   const { setUser, userData } = useAuthContext();
@@ -58,6 +59,14 @@ function App() {
           element: (
             <ProtectedRoute userData={userData}>
               <ChatPage />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "profile",
+          element: (
+            <ProtectedRoute userData={userData}>
+              <Profile />
             </ProtectedRoute>
           ),
         },
