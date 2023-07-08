@@ -21,16 +21,16 @@ import {
 import { AiFillFileAdd } from "react-icons/ai";
 import axios from "axios";
 
-export default function ApplyNewOffer({ isOpen, onOpen, onClose, job }) {
+export default function ApplyNewOffer({ isOpen, onOpen, onClose, job, getJob, id }) {
   const [file, setFile] = useState(null);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [error, setError] = useState(null);
+ 
 
   const [OfferData, setOfferData] = useState({
     price: "",
     message: "",
   });
-
 
   async function submitFormData(e) {
     e.preventDefault();
@@ -38,9 +38,9 @@ export default function ApplyNewOffer({ isOpen, onOpen, onClose, job }) {
     setSubmitLoading(true);
     try {
       const postResponse = await axios.post(
-        `https://back-ph2h.onrender.com/offer/apply/${job._id}/?auth_token=${localStorage.getItem(
-          "token"
-        )}`,
+        `https://back-ph2h.onrender.com/offer/apply/${
+          job._id
+        }/?auth_token=${localStorage.getItem("token")}`,
         OfferData,
         {
           headers: { "Content-Type": "application/json" },
@@ -48,18 +48,24 @@ export default function ApplyNewOffer({ isOpen, onOpen, onClose, job }) {
       );
       setSubmitLoading(false);
       console.log(postResponse);
+      getJob(`https://back-ph2h.onrender.com/jobs/${id}`)
+      onClose();
     } catch (error) {
       setError(error);
       setSubmitLoading(false);
       console.log(error);
     }
+    
   }
-
-
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose} scrollBehavior="inside" closeOnOverlayClick={false}>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        scrollBehavior="inside"
+        closeOnOverlayClick={false}
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Apply New Offer</ModalHeader>
@@ -79,10 +85,15 @@ export default function ApplyNewOffer({ isOpen, onOpen, onClose, job }) {
             </FormControl>
             <FormControl mb={2}>
               <FormLabel>Offer Note ?</FormLabel>
-              <Textarea placeholder="Add Your Offer Note" 
-              onChange={(e) => {
-                setOfferData((prev) => ({ ...prev, message: e.target.value}))
-              }}/>{" "}
+              <Textarea
+                placeholder="Add Your Offer Note"
+                onChange={(e) => {
+                  setOfferData((prev) => ({
+                    ...prev,
+                    message: e.target.value,
+                  }));
+                }}
+              />{" "}
             </FormControl>
             <FormControl mb={2}>
               <FormLabel>Offer Price</FormLabel>
@@ -98,10 +109,15 @@ export default function ApplyNewOffer({ isOpen, onOpen, onClose, job }) {
                   children="E£"
                   fontSize="1.2em"
                 />
-                <Input placeholder="Enter amount" 
-                onChange={(e) => {
-                  setOfferData((prev) => ({ ...prev, price: e.target.value}))
-                }}/>
+                <Input
+                  placeholder="Enter amount"
+                  onChange={(e) => {
+                    setOfferData((prev) => ({
+                      ...prev,
+                      price: e.target.value,
+                    }));
+                  }}
+                />
                 {/* <InputRightElement>
       <CheckIcon color='green.500' />
     </InputRightElement> */}
@@ -119,24 +135,20 @@ export default function ApplyNewOffer({ isOpen, onOpen, onClose, job }) {
                   setFile(e.target.files[0]);
                 }}
               />{" "}
-              {
-                file && (
-                  <AspectRatio maxW="100%" ratio={1}>
-                    <iframe
-                      title="naruto"
-                      src={URL.createObjectURL(file)}
-                      objectFit="contain"
-                    />
-                  </AspectRatio>
-                )
-
-              }
+              {file && (
+                <AspectRatio maxW="100%" ratio={1}>
+                  <iframe
+                    title="naruto"
+                    src={URL.createObjectURL(file)}
+                    objectFit="contain"
+                  />
+                </AspectRatio>
+              )}
             </FormControl>
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="green" mr={3}
-            onClick={submitFormData}>
+            <Button loadingText="Logining..." colorScheme="green" mr={3} onClick={submitFormData} isLoading={submitLoading} >
               Apply
             </Button>
             <Button onClick={onClose}>Cancel</Button>

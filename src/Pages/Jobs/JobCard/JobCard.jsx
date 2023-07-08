@@ -7,7 +7,7 @@ import { Avatar, WrapItem } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
 export default function JobCard({ job }) {
-  console.log(job);
+  // console.log(job);
   // const { user } = useAuthContext();
   const navigate = useNavigate();
   return (

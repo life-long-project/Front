@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./JobDetails.css";
 import { HiShare } from "react-icons/hi";
 import { BsBookmark, BsStar, BsStarFill } from "react-icons/bs";
@@ -20,15 +20,23 @@ import LoadingPage from "../LoadingPage/LoadingPage";
 import moment from "moment";
 import Rating from "react-rating";
 import ApplyNewOffer from "../../Components/ApplyNewOffer/ApplyNewOffer";
-
+import { useGetByAction } from "../../Hooks/useGetByAction";
 export default function JobDetails() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { id } = useParams();
+  const [jobUrl, setJobUrl] = useState(
+    `https://back-ph2h.onrender.com/jobs/${id}`
+  );
   const {
+    getData: getJob,
+    setData: setJob,
     data: job,
     isPending,
-    error,
-  } = useAxiosGet(`https://back-ph2h.onrender.com/jobs/${id}`);
+    error: jobError,
+  } = useGetByAction();
+  useEffect(() => {
+    getJob(`https://back-ph2h.onrender.com/jobs/${id}`);
+  }, []);
   console.log(job);
   return (
     <>
@@ -42,6 +50,8 @@ export default function JobDetails() {
                 onOpen={onOpen}
                 onClose={onClose}
                 job={job[0]}
+                getJob={getJob}
+                id={id}
               />
               <div className="col-lg-8">
                 <div className="jobDescriptionHeader jobDescriptionSection mb-5">
@@ -264,7 +274,9 @@ export default function JobDetails() {
                         </div>
                       </TabPanel>
                       <TabPanel>
-                        <p>two!</p>
+                        {job[0].offers.map((o, i) => (
+                          <p key={i}>{o.message}</p>
+                        ))}
                       </TabPanel>
                     </TabPanels>
                   </Tabs>

@@ -4,17 +4,11 @@ import FilterAccordation from "./FilterAccordation/FilterAccordation";
 
 let filterTitle = "Job Type";
 let filterItems = ["Full Time", "Part Time"];
-export default function FilterBox({ values, setValues }) {
+export default function FilterBox({ values, setValues,options }) {
   return (
     <>
       <FilterAccordation
-        filterTitle={filterTitle}
-        filterItems={filterItems}
-        values={values}
-        setValues={setValues}
-      />
-      <FilterAccordation
-        filterTitle={filterTitle}
+        filterTitle={"skills"}
         filterItems={filterItems}
         values={values}
         setValues={setValues}
