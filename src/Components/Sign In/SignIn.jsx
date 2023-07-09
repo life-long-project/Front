@@ -27,11 +27,11 @@ export default function SignIn() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (localStorage.getItem("token") != null) {
-      navigate("/jobs");
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (localStorage.getItem("token") != null) {
+  //     navigate("/jobs");
+  //   }
+  // }, [user]);
 
   return (
     <>
