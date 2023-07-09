@@ -16,6 +16,10 @@ export default function FilterAccordation({
   filterItems,
   values,
   setValues,
+  skills,
+  setUrl,
+  sort,
+  search
 }) {
   const addValue = (e) => {
     setValues((pre) => [...pre, e.target.value]);
@@ -23,6 +27,8 @@ export default function FilterAccordation({
   const decreaseValue = (e) => {
     setValues((pre) => pre.filter((i) => i !== e.target.value));
   };
+
+ 
 
   return (
     <>
@@ -38,13 +44,15 @@ export default function FilterAccordation({
           </h2>
           <AccordionPanel pb={4}>
             <Stack mt={1} spacing={1}>
-              {filterItems.map((item, index) => {
+              {filterItems && filterItems.map((item, index) => {
                 return (
                   <Checkbox
                     className="mb-2"
                     key={index}
                     onChange={(e) =>
-                      e.target.checked ? addValue(e) : decreaseValue(e)
+                     { e.target.checked ? addValue(e) : decreaseValue(e)
+                      // setUrl(`https://back-ph2h.onrender.com/jobs/?search=${search}&sort=${sort}&skills=${skills}`)
+                    }
                     }
                     value={item}
                   >

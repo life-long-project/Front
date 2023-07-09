@@ -13,11 +13,14 @@ import { useGetByAction } from "../../Hooks/useGetByAction";
 
 export default function Jobs() {
   const location = useLocation();
-  const [selectedSort,setSelectedSort] =useState('')
+  const [selectedSort, setSelectedSort] = useState("updatedAt");
+  const [skills, setSkills] = useState([]);
   const [url, setUrl] = useState(
     `https://back-ph2h.onrender.com/jobs/?job_location=${
       location.state ? location.state.selectedCity : ""
-    }&search=${location.state ? location.state.searchWord : ""}&sort=${selectedSort}`
+    }&search=${
+      location.state ? location.state.searchWord : ""
+    }&sort=${selectedSort}&skills=${skills}`
   );
   const {
     getData: getOptions,
@@ -29,7 +32,7 @@ export default function Jobs() {
   const { data, isPending } = useAxiosGet(url);
   const [search, setSearch] = useState("");
   const [values, setValues] = useState([]);
-  // const [skills, setSkills] = useState("");
+
   // const { myuser } = useAuthContext();
 
   useEffect(() => {
@@ -38,17 +41,25 @@ export default function Jobs() {
     }
     getOptions(`https://back-ph2h.onrender.com/jobs/options`);
   }, []);
-
+  useEffect(() => {
+    setUrl(
+      `https://back-ph2h.onrender.com/jobs/?search=${search}&sort=${selectedSort}&skills=${skills}`
+    );
+  }, [search, skills, selectedSort]);
 
   const handleSearch = (e) => {
     e.preventDefault();
-    setUrl(`https://back-ph2h.onrender.com/jobs/?search=${search}&sort=${selectedSort}`);
+    setUrl(
+      `https://back-ph2h.onrender.com/jobs/?search=${search}&sort=${selectedSort}&skills=${skills}`
+    );
   };
 
-  const handleSort= (s) => {
-    setSelectedSort(s)
-    setUrl(`https://back-ph2h.onrender.com/jobs/?search=${search}&sort=${selectedSort}`);
-  }
+  const handleSort = (s) => {
+    setSelectedSort(s);
+    setUrl(
+      `https://back-ph2h.onrender.com/jobs/?search=${search}&sort=${selectedSort}&skills=${skills}`
+    );
+  };
 
   return (
     <>
@@ -63,7 +74,15 @@ export default function Jobs() {
         <div className="row">
           <div className="col-lg-3">
             <section className="filterSection">
-              <FilterBox values={values} setValues={setValues} options={options}/>
+              <FilterBox
+                options={options}
+                skills={skills}
+                setSkills={setSkills}
+                url={url}
+                setUrl={setUrl}
+                sort={selectedSort}
+                search={search}
+              />
             </section>
           </div>
           <div className="col-lg-9">
@@ -86,7 +105,9 @@ export default function Jobs() {
                       <MenuList>
                         {options &&
                           options.sort.map((s, i) => (
-                            <MenuItem key={i} onClick={()=>handleSort(s)}>{s}</MenuItem>
+                            <MenuItem key={i} onClick={() => handleSort(s)}>
+                              {s}
+                            </MenuItem>
                           ))}
                       </MenuList>
                     </Menu>
