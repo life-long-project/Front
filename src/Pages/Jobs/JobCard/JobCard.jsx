@@ -29,7 +29,7 @@ export default function JobCard({ job }) {
               <Link to={`/profile/${job.user._id}`} class="job-card_company">
                 <h5 class="mb-1 d-inline-block">{job.user.full_name}</h5>
               </Link>
-              <p class="text-muted mb-0 text-capitalize">
+              <p class="mb-0 text-capitalize text-muted">
                 {job.job_location}, EGYPT
               </p>
             </div>

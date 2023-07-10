@@ -104,11 +104,13 @@
 /* New Job Card Css */
 .job-card {
 	background: #fff;
+  /* background-color: var(--main-color); */
 	margin-bottom: 25px;
 	border-radius: 5px;
 	overflow: hidden;
   border-radius: 16px;
   box-shadow: 0 1px 3px #12151b29;
+  /* color: #fff; */
 }
 .job-card__content {
 	padding: 25px;
@@ -131,7 +133,7 @@
 	flex: 1;
 }
 .job-card__content-top .job-card_info a {
-	color: #113357;
+	/* color: #113357; */
 }
 .job-card__footer {
 	display: flex;
@@ -139,6 +141,7 @@
 	justify-content: space-between;
 	padding: 20px 25px;
 	background: #fafafa;
+  /* background-color: var(--second-color); */
 }
 
 .job-label {

@@ -15,34 +15,41 @@ import {
   Tabs,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import LoadingPage from "../LoadingPage/LoadingPage";
 import moment from "moment";
 import Rating from "react-rating";
 import ApplyNewOffer from "../../Components/ApplyNewOffer/ApplyNewOffer";
 import { useGetByAction } from "../../Hooks/useGetByAction";
+
 export default function JobDetails() {
+  const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { id } = useParams();
-  const [jobUrl, setJobUrl] = useState(
-    `https://back-ph2h.onrender.com/jobs/${id}`
+  // const [jobUrl, setJobUrl] = useState(
+  //   `https://back-ph2h.onrender.com/jobs/${id}`
+  // );
+  const { data, isPending, error } = useAxiosGet(
+    `https://back-ph2h.onrender.com/jobs/related`
   );
+  // console.log(data);
+
   const {
     getData: getJob,
     setData: setJob,
     data: job,
-    isPending,
+    jobIsPending,
     error: jobError,
   } = useGetByAction();
   useEffect(() => {
     getJob(`https://back-ph2h.onrender.com/jobs/${id}`);
-  }, []);
+  }, [id]);
   console.log(job);
   return (
     <>
       <div className="container pt-5">
         <div className="row">
-          {!job && isPending && <LoadingPage />}
+          {!job && jobIsPending && <LoadingPage />}
           {job && (
             <>
               <ApplyNewOffer
@@ -69,7 +76,7 @@ export default function JobDetails() {
                           .subtract(1, "days")
                           .calendar()}`}
                       </p>
-                      <h1 className="jobDescriptionHeaderTitle mb-2">
+                      <h1 className="jobDescriptionHeaderTitle mb-2 text-capitalize">
                         {job[0].job_name}
                       </h1>
                       <p className="jobDescriptionHeaderTypeAndApply mb-3">
@@ -86,12 +93,12 @@ export default function JobDetails() {
                     </div>
                     <div className="col-lg-4 px-5">
                       <div className="jobDescriptionHeaderBtnSection">
-                        <div className="jobDescriptionShareBtn me-3">
+                        {/* <div className="jobDescriptionShareBtn me-3">
                           <HiShare />
                         </div>
                         <div className="jobDescriptionBookmarkBtn me-3">
                           <BsBookmark />
-                        </div>
+                        </div> */}
                         <div className="jobDescriptionApplyBtn me-3">
                           <button onClick={onOpen}>Apply</button>
                         </div>
@@ -260,16 +267,11 @@ export default function JobDetails() {
                         <div className="jobDescriptionSkills pt-3">
                           <div className="JobcardBodySkills">
                             <span>Job Skills : </span>
-                            {job[0].job_skills
-                              .map((skill, key) => (
-                                <span
-                                  className="JobcardSkillsBadge me-2"
-                                  key={key}
-                                >
-                                  {skill}
-                                </span>
-                              ))
-                              .slice(0, 2)}
+                            {job[0].job_skills.map((skill, key) => (
+                              <span className="job-label mx-1" key={key}>
+                                {skill}
+                              </span>
+                            ))}
                           </div>
                         </div>
                       </TabPanel>
@@ -294,7 +296,9 @@ export default function JobDetails() {
                       />
                     </div>
                     <div className="sidebarwedgitTitle mb-2">
-                      <h5 className="text-center">{job[0].user.full_name}</h5>
+                      <Link to={`/profile/${job[0].user._id}`}>
+                        <h5 className="text-center">{job[0].user.full_name}</h5>
+                      </Link>
                     </div>
                     <div className="sidebarwedgitLocation mb-2">
                       <p className="text-center">
@@ -321,10 +325,23 @@ export default function JobDetails() {
                 <div className="jobDescriptionSection mb-5">
                   <div className="sidebarwedgit p-3 pt-0">
                     <div className="sidebarwedgitName mb-4">Related Jobs</div>
-                    <div className="sidebarJobTitle d-flex">
-                      <TbSquareDot className="me-5 mt-1 fw-bold" />
-                      <h5 className="mb-0">job title</h5>
-                    </div>
+                    {isPending && <LoadingPage />}
+                    {data &&
+                      data.map((relatedJob, key) => (
+                        <div
+                          className="sidebarJobTitle mb-2 d-flex"
+                          onClick={() => {
+                            navigate(`/job-details/${relatedJob._id}/`, {
+                              replace: false,
+                            });
+                          }}
+                        >
+                          <TbSquareDot className="me-4 mt-1 fw-bold" />
+                          <h5 className="mb-0 text-capitalize" key={key}>
+                            {relatedJob.job_name}
+                          </h5>
+                        </div>
+                      ))}
                   </div>
                 </div>
               </div>
