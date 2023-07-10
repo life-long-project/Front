@@ -330,12 +330,10 @@ export default function JobDetails() {
                 <div className="jobDescriptionSection mb-5">
                   <div className="sidebarwedgit p-3 pt-0">
                     <div className="sidebarwedgitName mb-4">Related Jobs</div>
-                    <Link to="/job-details/64aacee7f22731701ca6b677">
                     <div className="sidebarJobTitle d-flex">
                       <TbSquareDot className="me-5 mt-1 fw-bold" />
                       <h5 className="mb-0">job title</h5>
                     </div>
-                    </Link>
                   </div>
                 </div>
               </div>
