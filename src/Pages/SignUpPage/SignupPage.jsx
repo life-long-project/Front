@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SignUp from "../../Components/Sign Up/SignUp";
+import useAuthContext from "../../Hooks/useAuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function SignupPage() {
+  const { user } = useAuthContext();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("token") != null) {
+      navigate("/jobs");
+    }
+  }, [user]);
   return (
     <>
       <section className="signupPage">

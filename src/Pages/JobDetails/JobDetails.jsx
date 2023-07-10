@@ -42,7 +42,7 @@ export default function JobDetails() {
     <>
       <div className="container pt-5">
         <div className="row">
-          {isPending && <LoadingPage />}
+          {!job && isPending && <LoadingPage />}
           {job && (
             <>
               <ApplyNewOffer
