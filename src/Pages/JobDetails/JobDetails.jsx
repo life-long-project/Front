@@ -15,15 +15,19 @@ import {
   Tabs,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useParams } from "react-router-dom";
+import { useParams,Link } from "react-router-dom";
 import LoadingPage from "../LoadingPage/LoadingPage";
 import moment from "moment";
 import Rating from "react-rating";
 import ApplyNewOffer from "../../Components/ApplyNewOffer/ApplyNewOffer";
 import { useGetByAction } from "../../Hooks/useGetByAction";
+import Register from "../../Components/RegisterPopUp/Register";
+import useAuthContext from "../../Hooks/useAuthContext";
 export default function JobDetails() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen:isOpenAuth, onOpen:onOpenAuth, onClose:onCloseAuth } = useDisclosure();
   const { id } = useParams();
+  const {user} = useAuthContext()
   const [jobUrl, setJobUrl] = useState(
     `https://back-ph2h.onrender.com/jobs/${id}`
   );
@@ -36,7 +40,7 @@ export default function JobDetails() {
   } = useGetByAction();
   useEffect(() => {
     getJob(`https://back-ph2h.onrender.com/jobs/${id}`);
-  }, []);
+  }, [id]);
   console.log(job);
   return (
     <>
@@ -45,6 +49,10 @@ export default function JobDetails() {
           {!job && isPending && <LoadingPage />}
           {job && (
             <>
+            <Register
+                            isOpen={isOpenAuth}
+                            onOpen={onOpenAuth}
+                            onClose={onCloseAuth}/>
               <ApplyNewOffer
                 isOpen={isOpen}
                 onOpen={onOpen}
@@ -93,7 +101,8 @@ export default function JobDetails() {
                           <BsBookmark />
                         </div>
                         <div className="jobDescriptionApplyBtn me-3">
-                          <button onClick={onOpen}>Apply</button>
+                          {user &&<button onClick={onOpen}>Apply</button>}
+                          {!user &&<button onClick={onOpenAuth}>Apply</button>}
                         </div>
                       </div>
                     </div>
@@ -321,10 +330,12 @@ export default function JobDetails() {
                 <div className="jobDescriptionSection mb-5">
                   <div className="sidebarwedgit p-3 pt-0">
                     <div className="sidebarwedgitName mb-4">Related Jobs</div>
+                    <Link to="/job-details/64aacee7f22731701ca6b677">
                     <div className="sidebarJobTitle d-flex">
                       <TbSquareDot className="me-5 mt-1 fw-bold" />
                       <h5 className="mb-0">job title</h5>
                     </div>
+                    </Link>
                   </div>
                 </div>
               </div>

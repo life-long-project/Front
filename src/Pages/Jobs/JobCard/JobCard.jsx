@@ -13,7 +13,7 @@ export default function JobCard({ job }) {
   return (
     <>
       <div className="jobCard">
-        {true && (
+        {/* {true && (
           <div className="jobCardBookmark">
             <BsBookmarkCheckFill />
           </div>
@@ -22,7 +22,7 @@ export default function JobCard({ job }) {
           <div className="jobCardBookmark">
             <BsBookmarkCheck />
           </div>
-        )}
+        )} */}
         <div className="JobcardHeader mb-0">
           <div className="row">
             <div className="col-5">
