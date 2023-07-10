@@ -15,22 +15,38 @@ import {
   Tabs,
   useDisclosure,
 } from "@chakra-ui/react";
+<<<<<<< HEAD
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+=======
+import { useParams,Link } from "react-router-dom";
+>>>>>>> db975afe50132ed77e119e1c813e0ba7d2cfcab9
 import LoadingPage from "../LoadingPage/LoadingPage";
 import moment from "moment";
 import Rating from "react-rating";
 import ApplyNewOffer from "../../Components/ApplyNewOffer/ApplyNewOffer";
 import { useGetByAction } from "../../Hooks/useGetByAction";
+<<<<<<< HEAD
 
+=======
+import Register from "../../Components/RegisterPopUp/Register";
+import useAuthContext from "../../Hooks/useAuthContext";
+>>>>>>> db975afe50132ed77e119e1c813e0ba7d2cfcab9
 export default function JobDetails() {
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen:isOpenAuth, onOpen:onOpenAuth, onClose:onCloseAuth } = useDisclosure();
   const { id } = useParams();
+<<<<<<< HEAD
   // const [jobUrl, setJobUrl] = useState(
   //   `https://back-ph2h.onrender.com/jobs/${id}`
   // );
   const { data, isPending, error } = useAxiosGet(
     `https://back-ph2h.onrender.com/jobs/related`
+=======
+  const {user} = useAuthContext()
+  const [jobUrl, setJobUrl] = useState(
+    `https://back-ph2h.onrender.com/jobs/${id}`
+>>>>>>> db975afe50132ed77e119e1c813e0ba7d2cfcab9
   );
   // console.log(data);
 
@@ -52,6 +68,10 @@ export default function JobDetails() {
           {!job && jobIsPending && <LoadingPage />}
           {job && (
             <>
+            <Register
+                            isOpen={isOpenAuth}
+                            onOpen={onOpenAuth}
+                            onClose={onCloseAuth}/>
               <ApplyNewOffer
                 isOpen={isOpen}
                 onOpen={onOpen}
@@ -100,7 +120,8 @@ export default function JobDetails() {
                           <BsBookmark />
                         </div> */}
                         <div className="jobDescriptionApplyBtn me-3">
-                          <button onClick={onOpen}>Apply</button>
+                          {user &&<button onClick={onOpen}>Apply</button>}
+                          {!user &&<button onClick={onOpenAuth}>Apply</button>}
                         </div>
                       </div>
                     </div>

@@ -15,8 +15,8 @@ export default function SigninPage() {
   }, [user]);
   return (
     <>
-      <section className="SignInPage">
-        <div className="container">
+      <section className="SignInPage pt-5">
+        <div className="container mt-5">
           <div className="row">
             <div className="col-lg-6">
               <SignIn />
