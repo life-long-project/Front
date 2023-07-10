@@ -21,7 +21,7 @@ export default function Register({ isOpen, onOpen, onClose }) {
           <ModalHeader>Log in to complete</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <SignIn/>
+            <SignIn classsName="mt-5"/>
           </ModalBody>
 
           <ModalFooter>
