@@ -15,38 +15,27 @@ import {
   Tabs,
   useDisclosure,
 } from "@chakra-ui/react";
-<<<<<<< HEAD
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
-=======
-import { useParams,Link } from "react-router-dom";
->>>>>>> db975afe50132ed77e119e1c813e0ba7d2cfcab9
+import { Link, useNavigate, useParams } from "react-router-dom";
 import LoadingPage from "../LoadingPage/LoadingPage";
 import moment from "moment";
 import Rating from "react-rating";
 import ApplyNewOffer from "../../Components/ApplyNewOffer/ApplyNewOffer";
 import { useGetByAction } from "../../Hooks/useGetByAction";
-<<<<<<< HEAD
-
-=======
 import Register from "../../Components/RegisterPopUp/Register";
 import useAuthContext from "../../Hooks/useAuthContext";
->>>>>>> db975afe50132ed77e119e1c813e0ba7d2cfcab9
 export default function JobDetails() {
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isOpen:isOpenAuth, onOpen:onOpenAuth, onClose:onCloseAuth } = useDisclosure();
   const { id } = useParams();
-<<<<<<< HEAD
   // const [jobUrl, setJobUrl] = useState(
   //   `https://back-ph2h.onrender.com/jobs/${id}`
   // );
   const { data, isPending, error } = useAxiosGet(
-    `https://back-ph2h.onrender.com/jobs/related`
-=======
+    `https://back-ph2h.onrender.com/jobs/related`)
   const {user} = useAuthContext()
   const [jobUrl, setJobUrl] = useState(
     `https://back-ph2h.onrender.com/jobs/${id}`
->>>>>>> db975afe50132ed77e119e1c813e0ba7d2cfcab9
   );
   // console.log(data);
 
@@ -350,6 +339,7 @@ export default function JobDetails() {
                     {data &&
                       data.map((relatedJob, key) => (
                         <div
+                          key={key}
                           className="sidebarJobTitle mb-2 d-flex"
                           onClick={() => {
                             navigate(`/job-details/${relatedJob._id}/`, {
@@ -358,7 +348,7 @@ export default function JobDetails() {
                           }}
                         >
                           <TbSquareDot className="me-4 mt-1 fw-bold" />
-                          <h5 className="mb-0 text-capitalize" key={key}>
+                          <h5 className="mb-0 text-capitalize">
                             {relatedJob.job_name}
                           </h5>
                         </div>
