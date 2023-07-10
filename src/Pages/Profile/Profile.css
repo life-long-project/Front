@@ -33,9 +33,27 @@
   color: #bcc5d3;
 }
 .fullSymbol {
-  color: #53ba51;
+  color: var(--main-color);
 }
 .ai-dollar-icon {
-  color: #53ba51;
+  color: var(--main-color);
   font-size: 24px;
+}
+.profile-bottom-section{
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 1px 3px #12151b29;
+  padding: 32px;
+
+}
+.bottom-section-rhs-title{
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 29px;
+  border-bottom: solid 1px var(--bg-color);
+  padding-bottom: 8px;
+}
+.verfiryIcon svg{
+  color: var(--main-color);
+  font-size: 22px;
 }
