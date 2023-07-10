@@ -3,7 +3,7 @@ import "./Profile.css";
 import { Link, useParams } from "react-router-dom";
 import Rating from "react-rating";
 import { BsStar, BsStarFill } from "react-icons/bs";
-import { AiFillDollarCircle } from "react-icons/ai";
+import { AiFillDollarCircle, AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { RiShieldStarLine } from "react-icons/ri";
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 import { MdEmail } from "react-icons/md";
@@ -53,6 +53,15 @@ export default function Profile() {
                           {data.user.rating} ({data.rates.length} reviews)
                         </span>
                       </div>
+                    </div>
+                    <div className="d-flex mt-3">
+                    <div className="jobDescriptionShareBtn me-3">
+                          <AiOutlineEdit />
+                        </div>
+                        {/* <div className="jobDescriptionBookmarkBtn me-3">
+                          <AiOutlineDelete />
+                        </div> */}
+
                     </div>
                   </div>
                   <div className="col-md-4">

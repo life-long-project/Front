@@ -176,6 +176,16 @@
 .sidebarwedgitLocation{
   font-size: 20px;
 }
+.offer-card{
+  background-color: #fafafa;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px #12151b29;
+  margin-bottom: 16px;
+  padding: 18px;
+}
+.offer-card:hover{
+  background-color: var(--third-color);
+}
 @media screen and (max-width: 768px) {
   .jobDescriptionFooterText{
     align-items: center;

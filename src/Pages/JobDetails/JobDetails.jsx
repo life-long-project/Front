@@ -23,17 +23,27 @@ import ApplyNewOffer from "../../Components/ApplyNewOffer/ApplyNewOffer";
 import { useGetByAction } from "../../Hooks/useGetByAction";
 import Register from "../../Components/RegisterPopUp/Register";
 import useAuthContext from "../../Hooks/useAuthContext";
+import { CiStickyNote } from "react-icons/ci";
+import { IoPricetagOutline } from "react-icons/io";
+import { IoCheckmarkDoneOutline, IoPricetagsOutline } from "react-icons/io5";
+import { AiFillDislike, AiFillLike, AiOutlineDelete, AiOutlineEdit, AiOutlineLoading3Quarters } from "react-icons/ai";
+import { BiSolidLike, BiSolidDislike } from "react-icons/bi";
 export default function JobDetails() {
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { isOpen:isOpenAuth, onOpen:onOpenAuth, onClose:onCloseAuth } = useDisclosure();
+  const {
+    isOpen: isOpenAuth,
+    onOpen: onOpenAuth,
+    onClose: onCloseAuth,
+  } = useDisclosure();
   const { id } = useParams();
   // const [jobUrl, setJobUrl] = useState(
   //   `https://back-ph2h.onrender.com/jobs/${id}`
   // );
   const { data, isPending, error } = useAxiosGet(
-    `https://back-ph2h.onrender.com/jobs/related`)
-  const {user} = useAuthContext()
+    `https://back-ph2h.onrender.com/jobs/related`
+  );
+  const { user } = useAuthContext();
   const [jobUrl, setJobUrl] = useState(
     `https://back-ph2h.onrender.com/jobs/${id}`
   );
@@ -57,10 +67,11 @@ export default function JobDetails() {
           {!job && jobIsPending && <LoadingPage />}
           {job && (
             <>
-            <Register
-                            isOpen={isOpenAuth}
-                            onOpen={onOpenAuth}
-                            onClose={onCloseAuth}/>
+              <Register
+                isOpen={isOpenAuth}
+                onOpen={onOpenAuth}
+                onClose={onCloseAuth}
+              />
               <ApplyNewOffer
                 isOpen={isOpen}
                 onOpen={onOpen}
@@ -71,6 +82,15 @@ export default function JobDetails() {
               />
               <div className="col-lg-8">
                 <div className="jobDescriptionHeader jobDescriptionSection mb-5">
+                  {/* <div className="px-3">
+                    <div className="alert alert-success" role="alert">
+                      <IoCheckmarkDoneOutline className="d-inline me-2" />
+                      Your Apply Request Is Accepted Now You Can{" "}
+                      <Link className=" text-decoration-underline">
+                        Chat Publisher
+                      </Link>
+                    </div>
+                  </div> */}
                   <div className="row">
                     <div className="col-lg-8 px-5">
                       <p className="jobDescriptionHeaderCreatedOn mb-2">
@@ -102,15 +122,15 @@ export default function JobDetails() {
                     </div>
                     <div className="col-lg-4 px-5">
                       <div className="jobDescriptionHeaderBtnSection">
-                        {/* <div className="jobDescriptionShareBtn me-3">
-                          <HiShare />
+                        <div className="jobDescriptionShareBtn me-3">
+                          <AiOutlineEdit />
                         </div>
                         <div className="jobDescriptionBookmarkBtn me-3">
-                          <BsBookmark />
-                        </div> */}
+                          <AiOutlineDelete />
+                        </div>
                         <div className="jobDescriptionApplyBtn me-3">
-                          {user &&<button onClick={onOpen}>Apply</button>}
-                          {!user &&<button onClick={onOpenAuth}>Apply</button>}
+                          {user && <button onClick={onOpen}>Apply</button>}
+                          {!user && <button onClick={onOpenAuth}>Apply</button>}
                         </div>
                       </div>
                     </div>
@@ -146,7 +166,7 @@ export default function JobDetails() {
                       <div className="carousel-item active">
                         <input
                           type="image"
-                          src="https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg"
+                          src="https://www.simplilearn.com/ice9/free_resources_article_thumb/Java_Developer_Job_Description.jpg"
                           className="d-block w-100"
                           alt="..."
                         />
@@ -287,7 +307,29 @@ export default function JobDetails() {
                       </TabPanel>
                       <TabPanel>
                         {job[0].offers.map((o, i) => (
-                          <p key={i}>{o.message}</p>
+                          <div className="offer-card d-flex justify-content-between" key={i}>
+                            <span>
+                            <span className="px-1">
+                              {" "}
+                              <CiStickyNote className="d-inline mx-1" />{" "}
+                              {o.message}
+                            </span>{" "}
+                            •{" "}
+                            <span className="px-1">
+                              {" "}
+                              <IoPricetagsOutline className="d-inline mx-1" />{" "}
+                              {o.price}
+                              {" E£ "}
+                            </span>
+
+                            </span>
+                            <span>
+                            <span className="mx-1 bg-success text-white fs-5 rounded px-2 py-1"><AiFillLike className="d-inline mb-1"/></span>
+                            <span className="mx-1 bg-danger text-white fs-5 rounded px-2 py-1"><AiFillDislike className="d-inline mb-1"/></span>
+
+                            </span>
+                            {/* <span className="px-1 jobDescriptionBookmarkBtn"><BiSolidDislike/></span> */}
+                          </div>
                         ))}
                       </TabPanel>
                     </TabPanels>
@@ -325,7 +367,7 @@ export default function JobDetails() {
                           emptySymbol={<BsStar className="text-muted" />}
                           fullSymbol={<BsStarFill className="text-warning" />}
                           fractions={2}
-                          readonly
+                          // readonly
                           initialRating={job[0].user.total_rating}
                         />
                       </p>

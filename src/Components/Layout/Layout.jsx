@@ -8,8 +8,11 @@ export default function Layout() {
   return (
     <>
       <NavBar />
-      <div className="EmptyPage">
+      <div className="EmptyPage position-relative">
         <Outlet></Outlet>
+        {/* <div className="support-chat">
+
+        </div> */}
       </div>
       <Footer />
     </>
