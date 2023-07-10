@@ -121,7 +121,11 @@ export default function NavBar() {
                       </MenuButton>
                       <MenuList>
                         <MenuGroup title="Profile">
-                          <MenuItem>My Account</MenuItem>
+                          <MenuItem onClick={
+                            () => {
+                              navigate(`/Profile/${user._id}`)
+                            }
+                          }>My Account</MenuItem>
                           <MenuItem onClick={
                             () => {
                               navigate("/create-job")

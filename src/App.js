@@ -63,11 +63,11 @@ function App() {
           ),
         },
         {
-          path: "profile",
+          path: "profile/:id",
           element: (
-            <ProtectedRoute userData={userData}>
+            // <ProtectedRoute userData={userData}>
               <Profile />
-            </ProtectedRoute>
+            // </ProtectedRoute>
           ),
         },
         {

@@ -6,7 +6,7 @@ export default function JobList({ jobs }) {
     <>
       <div className="row">
         {jobs.map((job, index) => (
-          <div className="col-lg-4" key={index}>
+          <div className="col-md-6" key={index}>
             <JobCard job={job} />
           </div>
         ))}

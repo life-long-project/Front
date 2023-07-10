@@ -2,37 +2,80 @@ import React from "react";
 import "./JobCard.css";
 import { BsBookmarkCheck, BsBookmarkCheckFill } from "react-icons/bs";
 import { format } from "timeago.js";
+import { Avatar, Img, WrapItem } from "@chakra-ui/react";
+import { Link, useNavigate } from "react-router-dom";
 // import useAuthContext from "../../Hooks/useAuthContext";
-import { Avatar, WrapItem } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
 
 export default function JobCard({ job }) {
-  // console.log(job);
   // const { user } = useAuthContext();
+  // console.log(job);
   const navigate = useNavigate();
   return (
     <>
-      <div className="jobCard">
-        {/* {true && (
-          <div className="jobCardBookmark">
-            <BsBookmarkCheckFill />
+      {/* New Job Card Start */}
+      <div class="job-card">
+        <div class="job-card__content">
+          <div class="job-card__content-top">
+            <div class="job-card_img">
+              {job.user.profile_url === null ? (
+                <WrapItem>
+                  <Avatar size="xl" name={job.user.full_name} />
+                </WrapItem>
+              ) : (
+                <Img src={job.user.profile_url} alt="User Logo" />
+              )}
+            </div>
+            <div class="job-card_info">
+              <Link to={`/profile/${job.user._id}`} class="job-card_company">
+                <h5 class="mb-1 d-inline-block">{job.user.full_name}</h5>
+              </Link>
+              <p class="text-muted mb-0 text-capitalize">
+                {job.job_location}, EGYPT
+              </p>
+            </div>
           </div>
-        )}
-        {false && (
-          <div className="jobCardBookmark">
-            <BsBookmarkCheck />
+          <div class="job-card_content-mid">
+            <Link to={`/job-details/${job._id}`}>
+              <h4 className="text-capitalize">{job.job_name}</h4>
+            </Link>
+            <p class="mb-0">
+              {job.salary} E£ / {job.job_type === "fulltime" ? "Mo" : "Hr"}
+            </p>
+            <div class="job-card_job-type">
+              <span class="job-label job-type me-1">
+                {job.job_type === "fulltime" ? "Full Time" : "Part Time"}
+              </span>
+              •{" "}
+              {job.job_skills
+                .map((skill, key) => (
+                  <span className="job-label" key={key}>
+                    {skill}
+                  </span>
+                ))
+                .slice(0, 1)}
+            </div>
           </div>
-        )} */}
+        </div>
+        <div class="job-card__footer">
+          <p class="mb-1 mt-1 text-muted">Posted: {format(job.createdAt)}</p>
+          <button
+            className="btn footerApplyBtn"
+            onClick={() => navigate(`/job-details/${job._id}`)}
+          >
+            See Details
+          </button>
+        </div>
+      </div>
+
+      {/* New Job Card End */}
+      {/* <div className="jobCard">
         <div className="JobcardHeader mb-0">
           <div className="row">
             <div className="col-5">
               <div className="jobHeaderImage mb-1">
                 {job.user.profile_url === null ? (
                   <WrapItem>
-                    <Avatar
-                      size="xl"
-                      name={job.user.full_name}
-                    />
+                    <Avatar size="xl" name={job.user.full_name} />
                   </WrapItem>
                 ) : (
                   <input
@@ -79,7 +122,7 @@ export default function JobCard({ job }) {
                   {skill}
                 </span>
               ))
-              .slice(0, 2)}
+              .slice(0, 1)}
           </div>
         </div>
         <div className="JobcardFooter mt-4">
@@ -94,16 +137,9 @@ export default function JobCard({ job }) {
                 </button>
               </div>
             </div>
-            <div className="col-lg-6">
-              {/* <div className="JobcardFooterButton">
-                <Link to="/chat" state={"title"}>
-                  <button className="w-100 btn footerMsgBtn">Message</button>
-                </Link>
-              </div> */}
-            </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

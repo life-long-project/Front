@@ -12,6 +12,7 @@ export const AuthContextProvider = ({ children }) => {
       setUser(decoded.user);
     }
   }, [setUser]);
+  console.log(user);
   return (
     <AuthContext.Provider value={{ user, setUser }}>
       {children}
