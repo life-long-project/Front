@@ -26,11 +26,23 @@ import useAuthContext from "../../Hooks/useAuthContext";
 import { CiStickyNote } from "react-icons/ci";
 import { IoPricetagOutline } from "react-icons/io";
 import { IoCheckmarkDoneOutline, IoPricetagsOutline } from "react-icons/io5";
-import { AiFillDislike, AiFillLike, AiOutlineDelete, AiOutlineEdit, AiOutlineLoading3Quarters } from "react-icons/ai";
+import {
+  AiFillDislike,
+  AiFillLike,
+  AiOutlineDelete,
+  AiOutlineEdit,
+  AiOutlineLoading3Quarters,
+} from "react-icons/ai";
 import { BiSolidLike, BiSolidDislike } from "react-icons/bi";
+import EditJobDetails from "../../Components/EditJobDetails/EditJobDetails";
 export default function JobDetails() {
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenEdit,
+    onOpen: onOpenEdit,
+    onClose: onCloseEdit,
+  } = useDisclosure();
   const {
     isOpen: isOpenAuth,
     onOpen: onOpenAuth,
@@ -67,6 +79,12 @@ export default function JobDetails() {
           {!job && jobIsPending && <LoadingPage />}
           {job && (
             <>
+              <EditJobDetails
+                isOpen={isOpenEdit}
+                onOpen={onOpenEdit}
+                onClose={onCloseEdit}
+                job={job}
+              />
               <Register
                 isOpen={isOpenAuth}
                 onOpen={onOpenAuth}
@@ -122,7 +140,7 @@ export default function JobDetails() {
                     </div>
                     <div className="col-lg-4 px-5">
                       <div className="jobDescriptionHeaderBtnSection">
-                        <div className="jobDescriptionShareBtn me-3">
+                        <div className="jobDescriptionShareBtn me-3" onClick={onOpenEdit}>
                           <AiOutlineEdit />
                         </div>
                         <div className="jobDescriptionBookmarkBtn me-3">
@@ -307,26 +325,31 @@ export default function JobDetails() {
                       </TabPanel>
                       <TabPanel>
                         {job[0].offers.map((o, i) => (
-                          <div className="offer-card d-flex justify-content-between" key={i}>
+                          <div
+                            className="offer-card d-flex justify-content-between"
+                            key={i}
+                          >
                             <span>
-                            <span className="px-1">
-                              {" "}
-                              <CiStickyNote className="d-inline mx-1" />{" "}
-                              {o.message}
-                            </span>{" "}
-                            •{" "}
-                            <span className="px-1">
-                              {" "}
-                              <IoPricetagsOutline className="d-inline mx-1" />{" "}
-                              {o.price}
-                              {" E£ "}
-                            </span>
-
+                              <span className="px-1">
+                                {" "}
+                                <CiStickyNote className="d-inline mx-1" />{" "}
+                                {o.message}
+                              </span>{" "}
+                              •{" "}
+                              <span className="px-1">
+                                {" "}
+                                <IoPricetagsOutline className="d-inline mx-1" />{" "}
+                                {o.price}
+                                {" E£ "}
+                              </span>
                             </span>
                             <span>
-                            <span className="mx-1 bg-success text-white fs-5 rounded px-2 py-1"><AiFillLike className="d-inline mb-1"/></span>
-                            <span className="mx-1 bg-danger text-white fs-5 rounded px-2 py-1"><AiFillDislike className="d-inline mb-1"/></span>
-
+                              <span className="mx-1 bg-success text-white fs-5 rounded px-2 py-1">
+                                <AiFillLike className="d-inline mb-1" />
+                              </span>
+                              <span className="mx-1 bg-danger text-white fs-5 rounded px-2 py-1">
+                                <AiFillDislike className="d-inline mb-1" />
+                              </span>
                             </span>
                             {/* <span className="px-1 jobDescriptionBookmarkBtn"><BiSolidDislike/></span> */}
                           </div>
