@@ -5,6 +5,7 @@ import reportWebVitals from "./reportWebVitals";
 import App from "./App";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
+import '@fortawesome/fontawesome-free/css/all.min.css'
 import { ChakraProvider } from "@chakra-ui/react";
 import { AuthContextProvider } from "./Contexts/AuthContext";
 
