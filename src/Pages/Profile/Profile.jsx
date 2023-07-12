@@ -112,7 +112,7 @@ export default function Profile() {
                 <Tabs>
                   <TabList>
                     <Tab>Reviews</Tab>
-                    <Tab>Applied Jobs</Tab>
+                    <Tab>Finished Jobs</Tab>
                     <Tab>Published Jobs</Tab>
                   </TabList>
 
