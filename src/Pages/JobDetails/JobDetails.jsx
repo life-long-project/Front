@@ -7,7 +7,6 @@ import { ImLocation } from "react-icons/im";
 import { CgWorkAlt } from "react-icons/cg";
 import { TbSquareDot } from "react-icons/tb";
 import { useAxiosGet } from "../../Hooks/useAxiosGet";
-import FinishJob from "./components/FinshJob"
 import {
   Button,
   Modal,
@@ -52,7 +51,11 @@ export default function JobDetails() {
   const [acceptedOffer, setAcceptedOffer] = useState(null);
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { isOpen:isOpenFinish, onOpen:onOpenFinish, onClose:onCloseFinish } = useDisclosure();
+  const {
+    isOpen: isOpenFinish,
+    onOpen: onOpenFinish,
+    onClose: onCloseFinish,
+  } = useDisclosure();
   const {
     isOpen: isOpenAccept,
     onOpen: onOpenAccept,
@@ -74,6 +77,13 @@ export default function JobDetails() {
     onClose: onCloseAuth,
   } = useDisclosure();
   const { id } = useParams();
+  const {
+    getData: getJob,
+    setData: setJob,
+    data: job,
+    jobIsPending,
+    error: jobError,
+  } = useGetByAction();
 
   const handleDeleteJob = async () => {
     console.log("deleted");
@@ -98,6 +108,7 @@ export default function JobDetails() {
         }/?auth_token=${localStorage.getItem("token")}`
       );
       console.log(res);
+      getJob(`https://back-ph2h.onrender.com/jobs/${id}`);
       // navigate("/jobs")
     } catch (error) {
       console.log(error);
@@ -114,14 +125,6 @@ export default function JobDetails() {
   console.log(user);
   console.log(acceptedOffer);
 
-  const {
-    getData: getJob,
-    setData: setJob,
-    data: job,
-    jobIsPending,
-    error: jobError,
-  } = useGetByAction();
-
   // get job when id is changing
   useEffect(() => {
     getJob(`https://back-ph2h.onrender.com/jobs/${id}`);
@@ -132,17 +135,25 @@ export default function JobDetails() {
     if (user && job && user._id === job[0].posted_by_id) setItIsMyJob(true);
     else {
       setItIsMyJob(false);
-      // if(job[0].offers.length>0)
-      // {
-      //   // job[0].offers.array.forEach(offer => {
-      //   //   if(offer.)
-      //   // });
-      //   console.log("iam offer");
-      // }
     }
   }, [user, job]);
+  // checking if current user applied to this job
+  useEffect(() => {
+    if (
+      user &&
+      job &&
+      user._id ===
+        job[0].offers?.find((element) => element.applicant_id == user._id)
+          ?.applicant_id
+    ) {
+      setIApplied(true);
 
-  // checking
+      // user._id === job[0].offers.find(element => element.applicant_id == user._id)
+    } else {
+      setIApplied(false);
+    }
+  }, [user, job]);
+  console.log(iApplied);
 
   console.log(job);
   return (
@@ -204,10 +215,10 @@ export default function JobDetails() {
                 </ModalContent>
               </Modal>
               <FinshJob
-              isOpen={isOpenFinish}
-              onOpen={onOpenFinish}
-              onClose={onCloseFinish}
-              job={job[0]._id}
+                isOpen={isOpenFinish}
+                onOpen={onOpenFinish}
+                onClose={onCloseFinish}
+                job={job[0]._id}
               />
               <EditJobDetails
                 isOpen={isOpenEdit}
@@ -270,22 +281,24 @@ export default function JobDetails() {
                     </div>
                     <div className="col-lg-4 px-5">
                       <div className="jobDescriptionHeaderBtnSection">
-                        {itIsMyJob && (
-                          <>
-                            <div
-                              className="jobDescriptionShareBtn me-3"
-                              onClick={onOpenEdit}
-                            >
-                              <AiOutlineEdit />
-                            </div>
-                            <div
-                              className="jobDescriptionBookmarkBtn me-3"
-                              onClick={onOpenDelete}
-                            >
-                              <AiOutlineDelete />
-                            </div>
-                          </>
-                        )}
+                        {itIsMyJob &&
+                          job[0].is_active &&
+                          !job[0].is_finished && (
+                            <>
+                              <div
+                                className="jobDescriptionShareBtn me-3"
+                                onClick={onOpenEdit}
+                              >
+                                <AiOutlineEdit />
+                              </div>
+                              <div
+                                className="jobDescriptionBookmarkBtn me-3"
+                                onClick={onOpenDelete}
+                              >
+                                <AiOutlineDelete />
+                              </div>
+                            </>
+                          )}
 
                         {user && !itIsMyJob && (
                           <div className="jobDescriptionApplyBtn me-3">
@@ -301,10 +314,16 @@ export default function JobDetails() {
                         {itIsMyJob &&
                           !job[0].is_active &&
                           !job[0].is_finished && (
-                            <div className="jobDescriptionApplyBtn me-3">
-                              {" "}
-                              <button onClick={onOpenFinish}>Finish</button>
-                            </div>
+                            <>
+                              <div className="jobDescriptionApplyBtn me-3">
+                                {" "}
+                                <button onClick={onOpenFinish}>Finish</button>
+                              </div>
+                              <div className="jobDescriptionApplyBtn me-3">
+                                {" "}
+                                <button>Message</button>
+                              </div>
+                            </>
                           )}
                       </div>
                     </div>
@@ -500,22 +519,24 @@ export default function JobDetails() {
                               </span>
                             </span>
                             <span>
-                              {itIsMyJob && (
-                                <>
-                                  <span
-                                    onClick={() => {
-                                      setAcceptedOffer(o);
-                                      onOpenAccept();
-                                    }}
-                                    className="mx-1 bg-success text-white fs-5 rounded px-2 py-1"
-                                  >
-                                    <AiFillLike className="d-inline mb-1" />
-                                  </span>
-                                  {/* <span className="mx-1 bg-danger text-white fs-5 rounded px-2 py-1">
+                              {itIsMyJob &&
+                                job[0].is_active &&
+                                !job[0].is_finished && (
+                                  <>
+                                    <span
+                                      onClick={() => {
+                                        setAcceptedOffer(o);
+                                        onOpenAccept();
+                                      }}
+                                      className="mx-1 bg-success text-white fs-5 rounded px-2 py-1"
+                                    >
+                                      <AiFillLike className="d-inline mb-1" />
+                                    </span>
+                                    {/* <span className="mx-1 bg-danger text-white fs-5 rounded px-2 py-1">
                                     <AiFillDislike className="d-inline mb-1" />
                                   </span> */}
-                                </>
-                              )}
+                                  </>
+                                )}
                             </span>
                             {/* <span className="px-1 jobDescriptionBookmarkBtn"><BiSolidDislike/></span> */}
                           </div>
