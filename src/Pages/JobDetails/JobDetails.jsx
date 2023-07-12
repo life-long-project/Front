@@ -7,6 +7,7 @@ import { ImLocation } from "react-icons/im";
 import { CgWorkAlt } from "react-icons/cg";
 import { TbSquareDot } from "react-icons/tb";
 import { useAxiosGet } from "../../Hooks/useAxiosGet";
+import FinishJob from "./components/FinshJob"
 import {
   Button,
   Modal,
@@ -44,13 +45,19 @@ import {
 import { BiSolidLike, BiSolidDislike } from "react-icons/bi";
 import EditJobDetails from "../../Components/EditJobDetails/EditJobDetails";
 import axios from "axios";
+import FinshJob from "./components/FinshJob";
 export default function JobDetails() {
   const [itIsMyJob, setItIsMyJob] = useState(false);
   const [iApplied, setIApplied] = useState(false);
-  const [acceptedOffer,setAcceptedOffer] =useState(null)
+  const [acceptedOffer, setAcceptedOffer] = useState(null);
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { isOpen:isOpenAccept, onOpen:onOpenAccept, onClose:onCloseAccept } = useDisclosure();
+  const { isOpen:isOpenFinish, onOpen:onOpenFinish, onClose:onCloseFinish } = useDisclosure();
+  const {
+    isOpen: isOpenAccept,
+    onOpen: onOpenAccept,
+    onClose: onCloseAccept,
+  } = useDisclosure();
   const {
     isOpen: isOpenDelete,
     onOpen: onOpenDelete,
@@ -68,30 +75,34 @@ export default function JobDetails() {
   } = useDisclosure();
   const { id } = useParams();
 
-  const handleDeleteJob = async()=>{
+  const handleDeleteJob = async () => {
     console.log("deleted");
     try {
-      const res = await axios.delete(`https://back-ph2h.onrender.com/jobs/${job[0]._id}/?auth_token=${localStorage.getItem(
-        "token"
-      )}`)
+      const res = await axios.delete(
+        `https://back-ph2h.onrender.com/jobs/${
+          job[0]._id
+        }/?auth_token=${localStorage.getItem("token")}`
+      );
       console.log(res);
-      navigate("/jobs")
+      navigate("/jobs");
     } catch (error) {
       console.log(error);
     }
-  }
-  const handleAcceptOffer = async(offer)=>{
+  };
+  const handleAcceptOffer = async (offer) => {
     console.log("Accepted");
     try {
-      const res = await axios.post(`https://back-ph2h.onrender.com/offer/accept/${offer._id}/?auth_token=${localStorage.getItem(
-        "token"
-      )}`)
+      const res = await axios.post(
+        `https://back-ph2h.onrender.com/offer/accept/${
+          offer._id
+        }/?auth_token=${localStorage.getItem("token")}`
+      );
       console.log(res);
       // navigate("/jobs")
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const { data, isPending, error } = useAxiosGet(
     `https://back-ph2h.onrender.com/jobs/related`
@@ -151,7 +162,9 @@ export default function JobDetails() {
                 <ModalContent>
                   <ModalHeader>Delete This Job</ModalHeader>
                   <ModalCloseButton />
-                  <ModalBody pb={6}>Are You Sure You Want To Delete This Job ?!!</ModalBody>
+                  <ModalBody pb={6}>
+                    Are You Sure You Want To Delete This Job ?!!
+                  </ModalBody>
 
                   <ModalFooter>
                     <Button onClick={handleDeleteJob} colorScheme="red" mr={3}>
@@ -171,19 +184,31 @@ export default function JobDetails() {
                 <ModalContent>
                   <ModalHeader>Accept This Offer!</ModalHeader>
                   <ModalCloseButton />
-                  <ModalBody pb={6}>Are You Sure You Want To Accept This Offer ?!!</ModalBody>
+                  <ModalBody pb={6}>
+                    Are You Sure You Want To Accept This Offer ?!!
+                  </ModalBody>
 
                   <ModalFooter>
-                    <Button onClick={()=>{
-                      handleAcceptOffer(acceptedOffer)
-                      onCloseAccept()
-                    }} colorScheme="green" mr={3}>
+                    <Button
+                      onClick={() => {
+                        handleAcceptOffer(acceptedOffer);
+                        onCloseAccept();
+                      }}
+                      colorScheme="green"
+                      mr={3}
+                    >
                       Accept
                     </Button>
-                    <Button >Cancel</Button>
+                    <Button onClick={onCloseAccept}>Cancel</Button>
                   </ModalFooter>
                 </ModalContent>
               </Modal>
+              <FinshJob
+              isOpen={isOpenFinish}
+              onOpen={onOpenFinish}
+              onClose={onCloseFinish}
+              job={job[0]._id}
+              />
               <EditJobDetails
                 isOpen={isOpenEdit}
                 onOpen={onOpenEdit}
@@ -262,14 +287,25 @@ export default function JobDetails() {
                           </>
                         )}
 
-                          {user && !itIsMyJob && (
-                            <div className="jobDescriptionApplyBtn me-3">
+                        {user && !itIsMyJob && (
+                          <div className="jobDescriptionApplyBtn me-3">
                             <button onClick={onOpen}>Apply</button>
+                          </div>
+                        )}
+                        {!user && (
+                          <div className="jobDescriptionApplyBtn me-3">
+                            {" "}
+                            <button onClick={onOpenAuth}>Apply</button>
+                          </div>
+                        )}
+                        {itIsMyJob &&
+                          !job[0].is_active &&
+                          !job[0].is_finished && (
+                            <div className="jobDescriptionApplyBtn me-3">
+                              {" "}
+                              <button onClick={onOpenFinish}>Finish</button>
                             </div>
                           )}
-                          {!user &&<div className="jobDescriptionApplyBtn me-3"> <button onClick={onOpenAuth}>Apply</button></div>}
-                          {itIsMyJob && !job[0].is_active && !job[0].is_finished &&<div className="jobDescriptionApplyBtn me-3"> <button>Finish</button></div>}
-                     
                       </div>
                     </div>
                   </div>
@@ -466,12 +502,13 @@ export default function JobDetails() {
                             <span>
                               {itIsMyJob && (
                                 <>
-                                  <span onClick={()=>{
-                                        setAcceptedOffer(o)
-                                        onOpenAccept()
-                                  }
-                                  } 
-                                  className="mx-1 bg-success text-white fs-5 rounded px-2 py-1">
+                                  <span
+                                    onClick={() => {
+                                      setAcceptedOffer(o);
+                                      onOpenAccept();
+                                    }}
+                                    className="mx-1 bg-success text-white fs-5 rounded px-2 py-1"
+                                  >
                                     <AiFillLike className="d-inline mb-1" />
                                   </span>
                                   {/* <span className="mx-1 bg-danger text-white fs-5 rounded px-2 py-1">
