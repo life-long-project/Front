@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Img } from "@chakra-ui/react";
 import { useAxiosGet } from "../../../Hooks/useAxiosGet";
 import { Link } from "react-router-dom";
-import { MdWorkOutline } from "react-icons/md";
+import { MdOutlineReportProblem, MdWorkOutline } from "react-icons/md";
 import { AiOutlineUser } from "react-icons/ai";
+import { useGetByAction } from "../../../Hooks/useGetByAction";
+import moment from "moment/moment";
+import { TbCircleDotFilled } from "react-icons/tb";
 
 export default function MainDashboard() {
   const {
@@ -18,6 +21,22 @@ export default function MainDashboard() {
     error: errorJobs,
   } = useAxiosGet("https://back-ph2h.onrender.com/jobs/");
 
+  const {
+    getData: getActivity,
+    setData: setActivity,
+    data,
+    isPending: activityLoading,
+    error: activityError,
+  } = useGetByAction();
+
+  useEffect(() => {
+    getActivity(
+      `https://back-ph2h.onrender.com/admin/?auth_token=${localStorage.getItem(
+        "token"
+      )}`
+    );
+  }, []);
+
   return (
     <>
       <div className="row">
@@ -27,33 +46,6 @@ export default function MainDashboard() {
             {/* Sales Card */}
             <div className="col-xxl-4 col-md-6">
               <div className="card info-card sales-card">
-                <div className="filter">
-                  <a className="icon" href="#" data-bs-toggle="dropdown">
-                    <i className="bi bi-three-dots"></i>
-                  </a>
-                  <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li className="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        Today
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        This Month
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        This Year
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-
                 <div className="card-body">
                   <h5 className="card-title">
                     Jobs <span>| All Days</span>
@@ -61,10 +53,12 @@ export default function MainDashboard() {
 
                   <div className="d-flex align-items-center">
                     <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i className="bi bi-cart"><MdWorkOutline/></i>
+                      <i className="bi bi-cart">
+                        <MdWorkOutline />
+                      </i>
                     </div>
                     <div className="ps-3">
-                      <h6>{allJobs && allJobs.total}</h6>
+                      <h6>{data && data.job_posts.length}</h6>
                       <span className="text-success small pt-1 fw-bold">
                         12%
                       </span>{" "}
@@ -81,33 +75,6 @@ export default function MainDashboard() {
             {/* Revenue Card */}
             <div className="col-xxl-4 col-md-6">
               <div className="card info-card revenue-card">
-                <div className="filter">
-                  <a className="icon" href="#" data-bs-toggle="dropdown">
-                    <i className="bi bi-three-dots"></i>
-                  </a>
-                  <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li className="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        Today
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        This Month
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        This Year
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-
                 <div className="card-body">
                   <h5 className="card-title">
                     User <span>| All Days</span>
@@ -115,10 +82,12 @@ export default function MainDashboard() {
 
                   <div className="d-flex align-items-center">
                     <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i className="bi bi-currency-dollar"><AiOutlineUser /></i>
+                      <i className="bi bi-currency-dollar">
+                        <AiOutlineUser />
+                      </i>
                     </div>
                     <div className="ps-3">
-                      <h6>{allUsers && allUsers.data.profiles.length}</h6>
+                      <h6>{data && data.users.length}</h6>
                       <span className="text-success small pt-1 fw-bold">
                         8%
                       </span>{" "}
@@ -135,44 +104,19 @@ export default function MainDashboard() {
             {/* Customers Card */}
             <div className="col-xxl-4 col-xl-12">
               <div className="card info-card customers-card">
-                <div className="filter">
-                  <a className="icon" href="#" data-bs-toggle="dropdown">
-                    <i className="bi bi-three-dots"></i>
-                  </a>
-                  <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li className="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        Today
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        This Month
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        This Year
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-
                 <div className="card-body">
                   <h5 className="card-title">
-                    Customers <span>| This Year</span>
+                    Reported
                   </h5>
 
                   <div className="d-flex align-items-center">
                     <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i className="bi bi-people"><MdWorkOutline/></i>
+                      <i className="bi bi-people">
+                        <MdOutlineReportProblem />
+                      </i>
                     </div>
                     <div className="ps-3">
-                      <h6>1244</h6>
+                      <h6>{data && data.reported_users.length + data.reported_job_posts.length}</h6>
                       <span className="text-danger small pt-1 fw-bold">
                         12%
                       </span>{" "}
@@ -189,33 +133,6 @@ export default function MainDashboard() {
             {/* Recent Sales */}
             <div className="col-12">
               <div className="card recent-sales overflow-auto">
-                <div className="filter">
-                  <a className="icon" href="#" data-bs-toggle="dropdown">
-                    <i className="bi bi-three-dots"></i>
-                  </a>
-                  <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li className="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        Today
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        This Month
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        This Year
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-
                 <div className="card-body">
                   <h5 className="card-title">
                     Recent Users <span>| Today</span>
@@ -231,8 +148,8 @@ export default function MainDashboard() {
                       </tr>
                     </thead>
                     <tbody>
-                      {allUsers &&
-                        allUsers.data.profiles.slice(0, 10).map((user, key) => (
+                      {data &&
+                        data.users.slice(0, 10).map((user, key) => (
                           <tr key={key}>
                             <td>{user.full_name}</td>
                             <td>
@@ -268,33 +185,6 @@ export default function MainDashboard() {
             {/* Top Selling */}
             <div className="col-12">
               <div className="card top-selling overflow-auto">
-                <div className="filter">
-                  <a className="icon" href="#" data-bs-toggle="dropdown">
-                    <i className="bi bi-three-dots"></i>
-                  </a>
-                  <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li className="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        Today
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        This Month
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        This Year
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-
                 <div className="card-body pb-0">
                   <h5 className="card-title">
                     Recent Jobs <span>| Today</span>
@@ -311,8 +201,8 @@ export default function MainDashboard() {
                       </tr>
                     </thead>
                     <tbody>
-                      {allJobs &&
-                        allJobs.jobs.slice(0, 10).map((job, key) => (
+                      {data &&
+                        data.job_posts.slice(0, 10).map((job, key) => (
                           <tr key={key}>
                             <td>
                               <Link
@@ -354,99 +244,34 @@ export default function MainDashboard() {
         <div className="col-lg-4">
           {/* Recent Activity */}
           <div className="card">
-            <div className="filter">
-              <a className="icon" href="#" data-bs-toggle="dropdown">
-                <i className="bi bi-three-dots"></i>
-              </a>
-              <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <li className="dropdown-header text-start">
-                  <h6>Filter</h6>
-                </li>
-
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Today
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    This Month
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    This Year
-                  </a>
-                </li>
-              </ul>
-            </div>
-
             <div className="card-body">
-              <h5 className="card-title">
-                Recent Activity <span>| Today</span>
-              </h5>
+              <h5 className="card-title">Recent Activity</h5>
 
               <div className="activity">
-                <div className="activity-item d-flex">
-                  <div className="activite-label">32 min</div>
-                  <i className="bi bi-circle-fill activity-badge text-success align-self-start"></i>
-                  <div className="activity-content">
-                    Quia quae rerum{" "}
-                    <a href="#" className="fw-bold text-dark">
-                      explicabo officiis
-                    </a>{" "}
-                    beatae
-                  </div>
-                </div>
-                {/* End activity item*/}
+                {data &&
+                  data.activity
+                    .map((activity, key) => (
+                      <div className="activity-item d-flex" key={key}>
+                        <div className="activite-label me-1">
+                          {moment(activity.createdAt).endOf("day").fromNow()}
+                        </div>
+                        <i className={`bi bi-circle-fill activity-badge ${activity.category ==="job" ? "text-success" : "text-danger"} align-self-start`}>
+                          <TbCircleDotFilled className="d-inline" />
+                        </i>
+                        <div className="activity-content">
+                          <span className="me-1 text-capitalize">
+                            {activity.category}
+                          </span>
+                          <Link to="" className="fw-bold text-dark">
+                            <span className="me-1 text-capitalize">
+                              {activity.activity_message}
+                            </span>
+                          </Link>{" "}
+                        </div>
+                      </div>
+                    ))
+                    .slice(0, 30)}
 
-                <div className="activity-item d-flex">
-                  <div className="activite-label">56 min</div>
-                  <i className="bi bi-circle-fill activity-badge text-danger align-self-start"></i>
-                  <div className="activity-content">
-                    Voluptatem blanditiis blanditiis eveniet
-                  </div>
-                </div>
-                {/* End activity item*/}
-
-                <div className="activity-item d-flex">
-                  <div className="activite-label">2 hrs</div>
-                  <i className="bi bi-circle-fill activity-badge text-primary align-self-start"></i>
-                  <div className="activity-content">
-                    Voluptates corrupti molestias voluptatem
-                  </div>
-                </div>
-                {/* End activity item*/}
-
-                <div className="activity-item d-flex">
-                  <div className="activite-label">1 day</div>
-                  <i className="bi bi-circle-fill activity-badge text-info align-self-start"></i>
-                  <div className="activity-content">
-                    Tempore autem saepe{" "}
-                    <a href="#" className="fw-bold text-dark">
-                      occaecati voluptatem
-                    </a>{" "}
-                    tempore
-                  </div>
-                </div>
-                {/* End activity item*/}
-
-                <div className="activity-item d-flex">
-                  <div className="activite-label">2 days</div>
-                  <i className="bi bi-circle-fill activity-badge text-warning align-self-start"></i>
-                  <div className="activity-content">
-                    Est sit eum reiciendis exercitationem
-                  </div>
-                </div>
-                {/* End activity item*/}
-
-                <div className="activity-item d-flex">
-                  <div className="activite-label">4 weeks</div>
-                  <i className="bi bi-circle-fill activity-badge text-muted align-self-start"></i>
-                  <div className="activity-content">
-                    Dicta dolorem harum nulla eius. Ut quidem quidem sit quas
-                  </div>
-                </div>
                 {/* End activity item*/}
               </div>
             </div>

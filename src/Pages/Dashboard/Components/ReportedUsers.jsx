@@ -133,6 +133,7 @@ export default function ReportedUsers() {
                     <th scope="col">Phone No.</th>
                     <th scope="col">Deleted ?</th>
                     <th scope="col">Reported ?</th>
+                    <th scope="col">Report Message</th>
                     <th scope="col">Blocked ?</th>
                     <th scope="col">Actions</th>
                   </tr>
@@ -173,6 +174,9 @@ export default function ReportedUsers() {
                               Good
                             </span>
                           )}
+                        </td>
+                        <td>
+                          {user.report_messages}
                         </td>
                         <td>
                           {user.is_blocked ? (

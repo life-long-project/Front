@@ -9,6 +9,7 @@ import { useToast } from "@chakra-ui/react";
 export default function ReportedJobs() {
   const successToast = useToast();
   const errorToast = useToast();
+  
   const {
     getData: getJobs,
     setData: setJobs,
@@ -101,6 +102,7 @@ export default function ReportedJobs() {
                     <th scope="col">Applied Status</th>
                     <th scope="col">Deleted ?</th>
                     <th scope="col">Reported ?</th>
+                    <th scope="col">Report Message</th>
                     <th scope="col">Actions</th>
                   </tr>
                 </thead>
@@ -151,6 +153,9 @@ export default function ReportedJobs() {
                               Clear
                             </span>
                           )}
+                        </td>
+                        <td>
+                          {job.report_messages}
                         </td>
                         <td>
                           <Tooltip
