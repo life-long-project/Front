@@ -8,6 +8,14 @@ import { CgWorkAlt } from "react-icons/cg";
 import { TbSquareDot } from "react-icons/tb";
 import { useAxiosGet } from "../../Hooks/useAxiosGet";
 import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Tab,
   TabList,
   TabPanel,
@@ -35,9 +43,19 @@ import {
 } from "react-icons/ai";
 import { BiSolidLike, BiSolidDislike } from "react-icons/bi";
 import EditJobDetails from "../../Components/EditJobDetails/EditJobDetails";
+import axios from "axios";
 export default function JobDetails() {
+  const [itIsMyJob, setItIsMyJob] = useState(false);
+  const [iApplied, setIApplied] = useState(false);
+  const [acceptedOffer,setAcceptedOffer] =useState(null)
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen:isOpenAccept, onOpen:onOpenAccept, onClose:onCloseAccept } = useDisclosure();
+  const {
+    isOpen: isOpenDelete,
+    onOpen: onOpenDelete,
+    onClose: onCloseDelete,
+  } = useDisclosure();
   const {
     isOpen: isOpenEdit,
     onOpen: onOpenEdit,
@@ -49,9 +67,32 @@ export default function JobDetails() {
     onClose: onCloseAuth,
   } = useDisclosure();
   const { id } = useParams();
-  // const [jobUrl, setJobUrl] = useState(
-  //   `https://back-ph2h.onrender.com/jobs/${id}`
-  // );
+
+  const handleDeleteJob = async()=>{
+    console.log("deleted");
+    try {
+      const res = await axios.delete(`https://back-ph2h.onrender.com/jobs/${job[0]._id}/?auth_token=${localStorage.getItem(
+        "token"
+      )}`)
+      console.log(res);
+      navigate("/jobs")
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const handleAcceptOffer = async(offer)=>{
+    console.log("Accepted");
+    try {
+      const res = await axios.post(`https://back-ph2h.onrender.com/offer/accept/${offer._id}/?auth_token=${localStorage.getItem(
+        "token"
+      )}`)
+      console.log(res);
+      // navigate("/jobs")
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const { data, isPending, error } = useAxiosGet(
     `https://back-ph2h.onrender.com/jobs/related`
   );
@@ -59,7 +100,8 @@ export default function JobDetails() {
   const [jobUrl, setJobUrl] = useState(
     `https://back-ph2h.onrender.com/jobs/${id}`
   );
-  // console.log(data);
+  console.log(user);
+  console.log(acceptedOffer);
 
   const {
     getData: getJob,
@@ -68,9 +110,29 @@ export default function JobDetails() {
     jobIsPending,
     error: jobError,
   } = useGetByAction();
+
+  // get job when id is changing
   useEffect(() => {
     getJob(`https://back-ph2h.onrender.com/jobs/${id}`);
   }, [id]);
+
+  // checking if this job is own to current user
+  useEffect(() => {
+    if (user && job && user._id === job[0].posted_by_id) setItIsMyJob(true);
+    else {
+      setItIsMyJob(false);
+      // if(job[0].offers.length>0)
+      // {
+      //   // job[0].offers.array.forEach(offer => {
+      //   //   if(offer.)
+      //   // });
+      //   console.log("iam offer");
+      // }
+    }
+  }, [user, job]);
+
+  // checking
+
   console.log(job);
   return (
     <>
@@ -79,6 +141,49 @@ export default function JobDetails() {
           {!job && jobIsPending && <LoadingPage />}
           {job && (
             <>
+              {/* delete pop up  */}
+              <Modal
+                closeOnOverlayClick={false}
+                isOpen={isOpenDelete}
+                onClose={onCloseDelete}
+              >
+                <ModalOverlay />
+                <ModalContent>
+                  <ModalHeader>Delete This Job</ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody pb={6}>Are You Sure You Want To Delete This Job ?!!</ModalBody>
+
+                  <ModalFooter>
+                    <Button onClick={handleDeleteJob} colorScheme="red" mr={3}>
+                      Delete
+                    </Button>
+                    <Button onClick={onClose}>Cancel</Button>
+                  </ModalFooter>
+                </ModalContent>
+              </Modal>
+              {/* accept pop up  */}
+              <Modal
+                closeOnOverlayClick={false}
+                isOpen={isOpenAccept}
+                onClose={onCloseAccept}
+              >
+                <ModalOverlay />
+                <ModalContent>
+                  <ModalHeader>Accept This Offer!</ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody pb={6}>Are You Sure You Want To Accept This Offer ?!!</ModalBody>
+
+                  <ModalFooter>
+                    <Button onClick={()=>{
+                      handleAcceptOffer(acceptedOffer)
+                      onCloseAccept()
+                    }} colorScheme="green" mr={3}>
+                      Accept
+                    </Button>
+                    <Button >Cancel</Button>
+                  </ModalFooter>
+                </ModalContent>
+              </Modal>
               <EditJobDetails
                 isOpen={isOpenEdit}
                 onOpen={onOpenEdit}
@@ -140,16 +245,31 @@ export default function JobDetails() {
                     </div>
                     <div className="col-lg-4 px-5">
                       <div className="jobDescriptionHeaderBtnSection">
-                        <div className="jobDescriptionShareBtn me-3" onClick={onOpenEdit}>
-                          <AiOutlineEdit />
-                        </div>
-                        <div className="jobDescriptionBookmarkBtn me-3">
-                          <AiOutlineDelete />
-                        </div>
-                        <div className="jobDescriptionApplyBtn me-3">
-                          {user && <button onClick={onOpen}>Apply</button>}
-                          {!user && <button onClick={onOpenAuth}>Apply</button>}
-                        </div>
+                        {itIsMyJob && (
+                          <>
+                            <div
+                              className="jobDescriptionShareBtn me-3"
+                              onClick={onOpenEdit}
+                            >
+                              <AiOutlineEdit />
+                            </div>
+                            <div
+                              className="jobDescriptionBookmarkBtn me-3"
+                              onClick={onOpenDelete}
+                            >
+                              <AiOutlineDelete />
+                            </div>
+                          </>
+                        )}
+
+                          {user && !itIsMyJob && (
+                            <div className="jobDescriptionApplyBtn me-3">
+                            <button onClick={onOpen}>Apply</button>
+                            </div>
+                          )}
+                          {!user &&<div className="jobDescriptionApplyBtn me-3"> <button onClick={onOpenAuth}>Apply</button></div>}
+                          {itIsMyJob && !job[0].is_active && !job[0].is_finished &&<div className="jobDescriptionApplyBtn me-3"> <button>Finish</button></div>}
+                     
                       </div>
                     </div>
                   </div>
@@ -344,12 +464,21 @@ export default function JobDetails() {
                               </span>
                             </span>
                             <span>
-                              <span className="mx-1 bg-success text-white fs-5 rounded px-2 py-1">
-                                <AiFillLike className="d-inline mb-1" />
-                              </span>
-                              <span className="mx-1 bg-danger text-white fs-5 rounded px-2 py-1">
-                                <AiFillDislike className="d-inline mb-1" />
-                              </span>
+                              {itIsMyJob && (
+                                <>
+                                  <span onClick={()=>{
+                                        setAcceptedOffer(o)
+                                        onOpenAccept()
+                                  }
+                                  } 
+                                  className="mx-1 bg-success text-white fs-5 rounded px-2 py-1">
+                                    <AiFillLike className="d-inline mb-1" />
+                                  </span>
+                                  {/* <span className="mx-1 bg-danger text-white fs-5 rounded px-2 py-1">
+                                    <AiFillDislike className="d-inline mb-1" />
+                                  </span> */}
+                                </>
+                              )}
                             </span>
                             {/* <span className="px-1 jobDescriptionBookmarkBtn"><BiSolidDislike/></span> */}
                           </div>
