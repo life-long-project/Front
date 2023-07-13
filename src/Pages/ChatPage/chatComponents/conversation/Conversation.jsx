@@ -4,9 +4,10 @@ import "./conversation.css";
 
 export default function Conversation({ conversation, currentUser }) {
   const [user, setUser] = useState(null);
+  console.log(conversation);
 
   useEffect(() => {
-    const friendId = conversation?.members?.find((m) => m !== currentUser._id);
+    const friendId = conversation?.conversation.members?.find((m) => m !== currentUser._id);
 
     // const getUser = async () => {
     //   try {

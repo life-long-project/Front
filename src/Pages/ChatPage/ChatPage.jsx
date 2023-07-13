@@ -62,7 +62,7 @@ export default function ChatPage(props) {
     isPending: conversationsLoading,
     error: conversationsError,
   } = useGetByAction();
-
+console.log(conversatonsRes.conversations);
   // action to get conversation once user is ready
   useEffect(() => {
     if (user) {
@@ -89,16 +89,16 @@ export default function ChatPage(props) {
     e.preventDefault();
     const message = {
       sender: user._id,
-      conversationId: currentChat._id,
+      conversationId: currentChat.conversation._id,
       text: newMessage,
     };
 
-    const receiverId = currentChat.members.find(
+    const receiverId = currentChat.conversation.members.find(
       (member) => member !== user._id
     );
 
     socket.current.emit("sendMessage", {
-      conversationId: currentChat._id,
+      conversationId: currentChat.conversation_id,
       senderId: user._id,
       receiverId,
       text: newMessage,
@@ -130,7 +130,7 @@ export default function ChatPage(props) {
                   setCurrentChat(c);
                   getMessages(
                     `https://back-ph2h.onrender.com/conversation/${
-                      c._id
+                      c.conversation._id
                     }/?auth_token=${localStorage.getItem("token")}`
                   );
                 }}
