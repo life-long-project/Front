@@ -62,7 +62,7 @@ export default function ChatPage(props) {
     isPending: conversationsLoading,
     error: conversationsError,
   } = useGetByAction();
-console.log(conversatonsRes.conversations);
+// console.log(conversatonsRes.conversations);
   // action to get conversation once user is ready
   useEffect(() => {
     if (user) {
@@ -124,7 +124,7 @@ console.log(conversatonsRes.conversations);
         <div className="chatMenuWrapper">
           <input placeholder="Search for friends" className="chatMenuInput" />
           {conversatonsRes &&
-            conversatonsRes.conversations?.map((c) => (
+            conversatonsRes?.conversations?.map((c) => (
               <div
                 onClick={() => {
                   setCurrentChat(c);
