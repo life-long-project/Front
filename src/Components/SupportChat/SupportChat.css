@@ -1,0 +1,15 @@
+#chat4 .form-control {
+  border-color: transparent;
+  }
+  
+  #chat4 .form-control:focus {
+  border-color: transparent;
+  box-shadow: inset 0px 0px 0px 1px transparent;
+  }
+  
+
+.card-body-content{
+  height: 350px;
+  overflow-y: scroll;
+  
+}
