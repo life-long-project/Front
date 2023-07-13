@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./JobDetails.css";
-import { HiShare } from "react-icons/hi";
-import { BsBookmark, BsStar, BsStarFill } from "react-icons/bs";
+import { BsStar, BsStarFill } from "react-icons/bs";
 import { FaCoins } from "react-icons/fa";
 import { ImLocation } from "react-icons/im";
 import { CgWorkAlt } from "react-icons/cg";
 import { TbSquareDot } from "react-icons/tb";
 import { useAxiosGet } from "../../Hooks/useAxiosGet";
 import {
+  Avatar,
   Button,
   Modal,
   ModalBody,
@@ -32,7 +32,6 @@ import { useGetByAction } from "../../Hooks/useGetByAction";
 import Register from "../../Components/RegisterPopUp/Register";
 import useAuthContext from "../../Hooks/useAuthContext";
 import { CiStickyNote } from "react-icons/ci";
-import { IoPricetagOutline } from "react-icons/io";
 import { IoCheckmarkDoneOutline, IoPricetagsOutline } from "react-icons/io5";
 import {
   AiFillDislike,
@@ -41,16 +40,28 @@ import {
   AiOutlineEdit,
   AiOutlineLoading3Quarters,
 } from "react-icons/ai";
-import { BiSolidLike, BiSolidDislike } from "react-icons/bi";
 import EditJobDetails from "../../Components/EditJobDetails/EditJobDetails";
 import axios from "axios";
 import FinshJob from "./components/FinshJob";
+import TakeRevenue from "./components/TakeRevenue";
+import ReportJob from "./components/ReportJob";
 export default function JobDetails() {
   const [itIsMyJob, setItIsMyJob] = useState(false);
   const [iApplied, setIApplied] = useState(false);
+  const [iAccepted, setIAccepted] = useState(false);
   const [acceptedOffer, setAcceptedOffer] = useState(null);
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenReport,
+    onOpen: onOpenReport,
+    onClose: onCloseReport,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenRevenue,
+    onOpen: onOpenRevenue,
+    onClose: onCloseRevenue,
+  } = useDisclosure();
   const {
     isOpen: isOpenFinish,
     onOpen: onOpenFinish,
@@ -86,7 +97,6 @@ export default function JobDetails() {
   } = useGetByAction();
 
   const handleDeleteJob = async () => {
-    console.log("deleted");
     try {
       const res = await axios.delete(
         `https://back-ph2h.onrender.com/jobs/${
@@ -100,7 +110,6 @@ export default function JobDetails() {
     }
   };
   const handleAcceptOffer = async (offer) => {
-    console.log("Accepted");
     try {
       const res = await axios.post(
         `https://back-ph2h.onrender.com/offer/accept/${
@@ -122,8 +131,6 @@ export default function JobDetails() {
   const [jobUrl, setJobUrl] = useState(
     `https://back-ph2h.onrender.com/jobs/${id}`
   );
-  console.log(user);
-  console.log(acceptedOffer);
 
   // get job when id is changing
   useEffect(() => {
@@ -153,9 +160,17 @@ export default function JobDetails() {
       setIApplied(false);
     }
   }, [user, job]);
-  console.log(iApplied);
+  // checking if current user accepted to this job
+  useEffect(() => {
+    if (user && job && user._id === job[0].accepted_user_id) {
+      setIAccepted(true);
 
-  console.log(job);
+      // user._id === job[0].offers.find(element => element.applicant_id == user._id)
+    } else {
+      setIAccepted(false);
+    }
+  }, [user, job]);
+
   return (
     <>
       <div className="container pt-5">
@@ -163,6 +178,20 @@ export default function JobDetails() {
           {!job && jobIsPending && <LoadingPage />}
           {job && (
             <>
+              {/* Report Job pop up  */}
+              <ReportJob
+                isOpen={isOpenReport}
+                onOpen={onOpenReport}
+                onClose={onCloseReport}
+                job={job[0]._id}
+              />
+              {/* TakeRevenue pop up  */}
+              <TakeRevenue
+                isOpen={isOpenRevenue}
+                onOpen={onOpenRevenue}
+                onClose={onCloseRevenue}
+                job={job[0]._id}
+              />
               {/* delete pop up  */}
               <Modal
                 closeOnOverlayClick={false}
@@ -181,7 +210,7 @@ export default function JobDetails() {
                     <Button onClick={handleDeleteJob} colorScheme="red" mr={3}>
                       Delete
                     </Button>
-                    <Button onClick={onClose}>Cancel</Button>
+                    <Button onClick={onCloseDelete}>Cancel</Button>
                   </ModalFooter>
                 </ModalContent>
               </Modal>
@@ -241,15 +270,25 @@ export default function JobDetails() {
               />
               <div className="col-lg-8">
                 <div className="jobDescriptionHeader jobDescriptionSection mb-5">
-                  {/* <div className="px-3">
-                    <div className="alert alert-success" role="alert">
-                      <IoCheckmarkDoneOutline className="d-inline me-2" />
-                      Your Apply Request Is Accepted Now You Can{" "}
-                      <Link className=" text-decoration-underline">
-                        Chat Publisher
-                      </Link>
+                  {user && iApplied && !iAccepted && (
+                    <div className="px-3">
+                      <div className="alert alert-warning" role="alert">
+                        <i className="me-2 fa-solid fa-spinner fa-spin"></i>
+                        Your Apply Request Is Pending{" "}
+                      </div>
                     </div>
-                  </div> */}
+                  )}
+                  {user && iAccepted && (
+                    <div className="px-3">
+                      <div className="alert alert-success" role="alert">
+                        <IoCheckmarkDoneOutline className="d-inline me-2" />
+                        Your Apply Request Is Accepted Now You Can{" "}
+                        <Link className=" text-decoration-underline">
+                          Chat Publisher
+                        </Link>
+                      </div>
+                    </div>
+                  )}
                   <div className="row">
                     <div className="col-lg-8 px-5">
                       <p className="jobDescriptionHeaderCreatedOn mb-2">
@@ -267,32 +306,35 @@ export default function JobDetails() {
                       <h1 className="jobDescriptionHeaderTitle mb-2 text-capitalize">
                         {job[0].job_name}
                       </h1>
-                      <p className="jobDescriptionHeaderTypeAndApply mb-3">
-                        <span className="jobDescriptionHeaderType text-capitalize">
-                          {job[0].job_type === "full-time"
-                            ? "Full Time"
-                            : "Part Time"}{" "}
-                          -{" "}
-                        </span>
-                        <span className="jobDescriptionHeaderApply">
-                          {job[0].offers.length} Apply
+                      <p className="jobDescriptionHeaderTypeAndApply mb-3 d-flex justify-content-between align-items-center">
+                        <span>
+                          {" "}
+                          <span className="jobDescriptionHeaderType text-capitalize">
+                            {job[0].job_type === "full-time"
+                              ? "Full Time"
+                              : "Part Time"}{" "}
+                            -{" "}
+                          </span>
+                          <span className="jobDescriptionHeaderApply">
+                            {job[0].offers.length} Apply
+                          </span>
                         </span>
                       </p>
                     </div>
-                    <div className="col-lg-4 px-5">
+                    <div className="col-lg-4 px-5 d-flex flex-column justify-content-around">
                       <div className="jobDescriptionHeaderBtnSection">
                         {itIsMyJob &&
                           job[0].is_active &&
                           !job[0].is_finished && (
                             <>
                               <div
-                                className="jobDescriptionShareBtn me-3"
+                                className="jobDescriptionShareBtn me-3 btn"
                                 onClick={onOpenEdit}
                               >
                                 <AiOutlineEdit />
                               </div>
                               <div
-                                className="jobDescriptionBookmarkBtn me-3"
+                                className="jobDescriptionBookmarkBtn me-3 btn"
                                 onClick={onOpenDelete}
                               >
                                 <AiOutlineDelete />
@@ -300,7 +342,16 @@ export default function JobDetails() {
                             </>
                           )}
 
-                        {user && !itIsMyJob && (
+                        {user && iAccepted && job[0].is_finished && (
+                          <div className="jobDescriptionApplyBtn me-3">
+                            {" "}
+                            <button onClick={onOpenRevenue}>
+                              Take Revenue
+                            </button>
+                          </div>
+                        )}
+
+                        {user && !itIsMyJob && !iApplied && (
                           <div className="jobDescriptionApplyBtn me-3">
                             <button onClick={onOpen}>Apply</button>
                           </div>
@@ -326,6 +377,16 @@ export default function JobDetails() {
                             </>
                           )}
                       </div>
+                      {user && !itIsMyJob && !iApplied && (
+                        <div className="text-end px-1">
+                          <button
+                            className="me-auto btn text-secondary text-end"
+                            onClick={onOpenReport}
+                          >
+                            Report <i class="ms-2 fa-regular fa-flag"></i>
+                          </button>
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div
@@ -419,7 +480,7 @@ export default function JobDetails() {
                             <div className="col-lg-6">
                               <div className="jobDescriptionFooterText">
                                 <p className="jobDescriptionHeaderFooterItemTitle my-2">
-                                  {job[0].salary}
+                                  {job[0].salary} EGP
                                 </p>
                                 <p className="jobDescriptionHeaderFooterItemSubTitle">
                                   Salary
@@ -439,7 +500,7 @@ export default function JobDetails() {
                             </div>
                             <div className="col-lg-6">
                               <div className="jobDescriptionFooterText">
-                                <p className="jobDescriptionHeaderFooterItemTitle my-2">
+                                <p className="jobDescriptionHeaderFooterItemTitle my-2 text-capitalize">
                                   {job[0].job_location}
                                 </p>
                                 <p className="jobDescriptionHeaderFooterItemSubTitle">
@@ -500,45 +561,66 @@ export default function JobDetails() {
                       </TabPanel>
                       <TabPanel>
                         {job[0].offers.map((o, i) => (
-                          <div
-                            className="offer-card d-flex justify-content-between"
-                            key={i}
-                          >
-                            <span>
-                              <span className="px-1">
-                                {" "}
-                                <CiStickyNote className="d-inline mx-1" />{" "}
-                                {o.message}
-                              </span>{" "}
-                              •{" "}
-                              <span className="px-1">
-                                {" "}
-                                <IoPricetagsOutline className="d-inline mx-1" />{" "}
-                                {o.price}
-                                {" E£ "}
-                              </span>
-                            </span>
-                            <span>
-                              {itIsMyJob &&
-                                job[0].is_active &&
-                                !job[0].is_finished && (
-                                  <>
+                          <div class="row offer-card" key={i}>
+                            <div class="row mb-2">
+                              <div className="col-1 d-flex justify-content-center align-items-center">
+                                <Avatar
+                                  size="lg"
+                                  className="navBarAvatar"
+                                  name={o.applicant_name}
+                                ></Avatar>
+                              </div>
+                              <div className="col-10">
+                                <p className="mb-1">{o.applicant_name}</p>
+                                <Rating
+                                  className="ratingProfile"
+                                  emptySymbol={
+                                    <BsStarFill className="emptySymbol" />
+                                  }
+                                  fullSymbol={
+                                    <BsStarFill className="fullSymbol" />
+                                  }
+                                  fractions={2}
+                                  readonly
+                                  initialRating={o.owner.rating}
+                                />
+                              </div>
+                              <div className="col-1 d-flex justify-content-center align-items-center">
+                                {itIsMyJob &&
+                                  job[0].is_active &&
+                                  !job[0].is_finished && (
                                     <span
                                       onClick={() => {
                                         setAcceptedOffer(o);
                                         onOpenAccept();
                                       }}
-                                      className="mx-1 bg-success text-white fs-5 rounded px-2 py-1"
+                                      className="mx-1 bg-success text-white fs-5 rounded px-2 py-1 btn"
                                     >
                                       <AiFillLike className="d-inline mb-1" />
                                     </span>
-                                    {/* <span className="mx-1 bg-danger text-white fs-5 rounded px-2 py-1">
-                                    <AiFillDislike className="d-inline mb-1" />
-                                  </span> */}
-                                  </>
+                                  )}
+                              </div>
+                            </div>
+                            <div className="row ps-4 justify-content-between align-items-center">
+                              <span className="d-flex align-items-center">
+                                {o.message ? (
+                                  <span className="px-1">
+                                    {" "}
+                                    <CiStickyNote className="d-inline mx-1" />{" "}
+                                    {o.message} •{" "}
+                                  </span>
+                                ) : (
+                                  ""
                                 )}
-                            </span>
-                            {/* <span className="px-1 jobDescriptionBookmarkBtn"><BiSolidDislike/></span> */}
+
+                                <span className="px-1 mb-0 pb-0">
+                                  {" "}
+                                  <IoPricetagsOutline className="d-inline mx-1" />{" "}
+                                  {o.price}
+                                  {" EGP "}
+                                </span>
+                              </span>
+                            </div>
                           </div>
                         ))}
                       </TabPanel>
@@ -573,13 +655,16 @@ export default function JobDetails() {
                     </div>
                     <div className="sidebarwedgitBio mb-2">
                       <p className="text-center ratingP mb-0 d-flex align-items-center justify-content-center">
-                        <Rating
-                          emptySymbol={<BsStar className="text-muted" />}
-                          fullSymbol={<BsStarFill className="text-warning" />}
-                          fractions={2}
-                          // readonly
-                          initialRating={job[0].user.total_rating}
-                        />
+                        <div className="rating-Profile mb-2 text-center">
+                          <Rating
+                            className="ratingProfile"
+                            emptySymbol={<BsStarFill className="emptySymbol" />}
+                            fullSymbol={<BsStarFill className="fullSymbol" />}
+                            fractions={2}
+                            initialRating={job[0].user.rating}
+                            readonly
+                          />{" "}
+                        </div>
                       </p>
                     </div>
                   </div>
@@ -599,7 +684,7 @@ export default function JobDetails() {
                             });
                           }}
                         >
-                          <TbSquareDot className="me-4 mt-1 fw-bold" />
+                          <i className="me-4 mt-1 ms-2 text-primary fa-solid fa-briefcase fa-shake"></i>
                           <h5 className="mb-0 text-capitalize">
                             {relatedJob.job_name}
                           </h5>

@@ -6,11 +6,12 @@ import "./Layout.css";
 import useAuthContext from "../../Hooks/useAuthContext";
 
 export default function Layout() {
+  const { user } = useAuthContext();
 
   return (
     <>
       <NavBar />
-      <div className="EmptyPage position-relative">
+      <div className={`EmptyPage position-relative ${user && user.is_admin ? "pt-5" : ""}`}>
         <Outlet></Outlet>
         {/* <div className="support-chat">
 

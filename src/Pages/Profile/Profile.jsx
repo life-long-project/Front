@@ -3,9 +3,20 @@ import "./Profile.css";
 import { Link, useParams } from "react-router-dom";
 import Rating from "react-rating";
 import { BsStar, BsStarFill } from "react-icons/bs";
-import { AiFillDollarCircle, AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
+import {
+  AiFillDollarCircle,
+  AiOutlineDelete,
+  AiOutlineEdit,
+} from "react-icons/ai";
 import { RiShieldStarLine } from "react-icons/ri";
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
+import {
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { MdEmail } from "react-icons/md";
 import { FaUserAlt } from "react-icons/fa";
 import { useAxiosGet } from "../../Hooks/useAxiosGet";
@@ -13,15 +24,33 @@ import moment from "moment";
 import Loading from "../LoadingPage/LoadingPage";
 import JobList from "../Jobs/JobList/JobList";
 import { BsFillTelephoneFill } from "react-icons/bs";
+import ReportProfile from "./Components/ReportProfile";
+import useAuthContext from "../../Hooks/useAuthContext";
 
 export default function Profile() {
+  const { user } = useAuthContext();
+  console.log(user);
+  const {
+    isOpen: isOpenReport,
+    onOpen: onOpenReport,
+    onClose: onCloseReport,
+  } = useDisclosure();
+
   const { id } = useParams();
   const { data, isPending, error } = useAxiosGet(
     `https://back-ph2h.onrender.com/user/profile/${id}`
   );
+
   console.log(data);
   return (
     <>
+      {/* Report Job pop up  */}
+      <ReportProfile
+        isOpen={isOpenReport}
+        onOpen={onOpenReport}
+        onClose={onCloseReport}
+        reportedId={data && data.user._id}
+      />
       {isPending && <Loading />}
       {data && (
         <div className="container">
@@ -55,13 +84,23 @@ export default function Profile() {
                       </div>
                     </div>
                     <div className="d-flex mt-3">
-                    <div className="jobDescriptionShareBtn me-3">
-                          <AiOutlineEdit />
+                      {user && user._id === data.user._id && (
+                        <div className="jobDescriptionShareBtn me-3">
+                          <button className="">
+                            <i class="fa-regular fa-pen-to-square"></i>
+                          </button>
                         </div>
-                        {/* <div className="jobDescriptionBookmarkBtn me-3">
-                          <AiOutlineDelete />
-                        </div> */}
-
+                      )}
+                      {user && !(user._id === data.user._id) && (
+                        <div className="jobDescriptionBookmarkBtn me-3">
+                          <button
+                            className="btn text-secondary text-end"
+                            onClick={onOpenReport}
+                          >
+                            Report <i class="ms-2 fa-regular fa-flag"></i>
+                          </button>
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div className="col-md-4">
@@ -70,7 +109,9 @@ export default function Profile() {
                         <li className="list-group-item">
                           <strong>Total Earning : </strong>
                           <AiFillDollarCircle className="d-inline ai-dollar-icon" />{" "}
-                          <span className="text-muted">250 LE</span>
+                          <span className="text-muted">
+                            {data.user.total_earning} EGP
+                          </span>
                         </li>
                         <li className="list-group-item">
                           <strong>Jobs Completed : </strong>

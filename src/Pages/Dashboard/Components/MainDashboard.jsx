@@ -9,17 +9,6 @@ import moment from "moment/moment";
 import { TbCircleDotFilled } from "react-icons/tb";
 
 export default function MainDashboard() {
-  const {
-    data: allUsers,
-    isPending,
-    error,
-  } = useAxiosGet("https://back-ph2h.onrender.com/profile/");
-
-  const {
-    data: allJobs,
-    isPending: isPendingJobs,
-    error: errorJobs,
-  } = useAxiosGet("https://back-ph2h.onrender.com/jobs/");
 
   const {
     getData: getActivity,
@@ -260,7 +249,7 @@ export default function MainDashboard() {
                         </i>
                         <div className="activity-content">
                           <span className="me-1 text-capitalize">
-                            {activity.category}
+                            {activity.category + " | "}
                           </span>
                           <Link to="" className="fw-bold text-dark">
                             <span className="me-1 text-capitalize">

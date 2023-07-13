@@ -3,12 +3,31 @@ import "./Jobs.css";
 import { useAxiosGet } from "../../Hooks/useAxiosGet";
 import FilterBox from "./FilterBox/FilterBox";
 import SearchJobs from "./SearchJobs/SearchJobs";
-import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
+import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Box,
+  Button,
+  Checkbox,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Stack,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+} from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import Loading from "../LoadingPage/LoadingPage";
 import JobList from "./JobList/JobList";
 import { useLocation } from "react-router-dom";
-// import useAuthContext from "../../Hooks/useAuthContext";
+import useAuthContext from "../../Hooks/useAuthContext";
 import { useGetByAction } from "../../Hooks/useGetByAction";
 
 export default function Jobs() {
@@ -31,10 +50,16 @@ export default function Jobs() {
   } = useGetByAction();
   const { data, isPending } = useAxiosGet(url);
   const [search, setSearch] = useState("");
-  const [values, setValues] = useState([]);
+  // const [values, setValues] = useState([]);
+  const { user } = useAuthContext();
 
-  // const { myuser } = useAuthContext();
+  const {
+    data: profileData,
+    isPending: profileIsPending,
+    error: profileError,
+  } = useAxiosGet(`https://back-ph2h.onrender.com/user/profile/${user?._id}`);
 
+  console.log(profileData);
   useEffect(() => {
     if (location.state) {
       setSearch(location.state.searchWord);
@@ -113,6 +138,64 @@ export default function Jobs() {
                     </Menu>
                   </div>
                 </div>
+
+                {user && profileData && (
+                        <Accordion allowMultiple>
+                          <AccordionItem className="filterBoxAccordation">
+                            <h2>
+                              <AccordionButton>
+                                <Box
+                                  as="span"
+                                  flex="1"
+                                  textAlign="left"
+                                  className="fw-bold"
+                                >
+                                  My Jobs <i className="ms-2 fa-solid fa-briefcase fa-shake"></i>
+                                </Box>
+                                <AccordionIcon />
+                              </AccordionButton>
+                            </h2>
+                            <AccordionPanel pb={4}>
+                              <Stack mt={1} spacing={1}>
+                                <Tabs>
+                                  <TabList>
+                                    <Tab>
+                                      On Progress Jobs{" "}
+                                      <i className="ms-2 fa-solid fa-person-digging fa-beat-fade"></i>
+                                    </Tab>
+                                    <Tab>
+                                      Pending Jobs{" "}
+                                      <i className="ms-2 fa-solid fa-spinner fa-spin"></i>
+                                    </Tab>
+                                    <Tab>
+                                      Published Jobs{" "}
+                                      <i className="ms-2 fa-solid fa-crown fa-bounce"></i>
+                                    </Tab>
+                                  </TabList>
+
+                                  <TabPanels>
+                                    <TabPanel>
+                                      <JobList
+                                        jobs={profileData.accepted_jobs}
+                                      />
+                                    </TabPanel>
+                                    <TabPanel>
+                                      <JobList
+                                        jobs={profileData.pending_offers.map(
+                                          (offer, key) => offer.job
+                                        )}
+                                      />
+                                    </TabPanel>
+                                    <TabPanel>
+                                      <JobList jobs={profileData.user_jobs} />
+                                    </TabPanel>
+                                  </TabPanels>
+                                </Tabs>
+                              </Stack>
+                            </AccordionPanel>
+                          </AccordionItem>
+                        </Accordion>
+                      )}
 
                 <section className="jobSection">
                   <JobList jobs={data.jobs} />

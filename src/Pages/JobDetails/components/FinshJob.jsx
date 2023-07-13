@@ -17,8 +17,8 @@ import { BsStar, BsStarFill } from "react-icons/bs";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export default function FinshJob({ isOpen, onOpen, onClose,job }) {
-    const navigate = useNavigate()
+export default function FinshJob({ isOpen, onOpen, onClose, job }) {
+  const navigate = useNavigate();
   const [userRating, SetUserRating] = useState({
     rating: 5,
     feedback: "",
@@ -27,7 +27,10 @@ export default function FinshJob({ isOpen, onOpen, onClose,job }) {
   const handleSendRating = async () => {
     try {
       const res = await axios.post(
-        `https://back-ph2h.onrender.com/rate/user/${job}/?auth_token=${localStorage.getItem("token")}`,userRating
+        `https://back-ph2h.onrender.com/rate/user/${job}/?auth_token=${localStorage.getItem(
+          "token"
+        )}`,
+        userRating
       );
       console.log(res);
       // navigate("/jobs")
@@ -39,10 +42,13 @@ export default function FinshJob({ isOpen, onOpen, onClose,job }) {
     console.log("finished");
     try {
       const res = await axios.post(
-        `https://back-ph2h.onrender.com/jobs/update_status/${job}/?auth_token=${localStorage.getItem("token")}`,{ "is_finished":"true" }
+        `https://back-ph2h.onrender.com/jobs/update_status/${job}/?auth_token=${localStorage.getItem(
+          "token"
+        )}`,
+        { is_finished: "true" }
       );
       console.log(res);
-      navigate("/jobs")
+      navigate("/jobs");
     } catch (error) {
       console.log(error);
     }
@@ -53,31 +59,45 @@ export default function FinshJob({ isOpen, onOpen, onClose,job }) {
       <ModalContent>
         <ModalHeader>Finish This Job!</ModalHeader>
         <ModalCloseButton />
-        <ModalBody pb={6}>Please Rate Your Employee !!</ModalBody>
-        <p className="text-center ratingP mb-0 d-flex align-items-center justify-content-center">
-          <Rating
-            emptySymbol={<BsStar className="text-muted" />}
-            fullSymbol={<BsStarFill className="text-warning" />}
-            fractions={2}
-            // readonly
-            initialRating={5}
-            onChange={(value) =>
-              SetUserRating({ rating: value, feedback: userRating.feedback })
-            }
-          />
-        </p>
-
-        <FormControl mb={2}>
-          <FormLabel>FeedBack</FormLabel>
-          <Input placeholder="FeedBack" value={userRating.feedback} onChange={(e)=> SetUserRating({ rating: userRating.rating, feedback: e.target.value })}/>
-        </FormControl>
+        <ModalBody pb={6}>
+          {" "}
+          <div className="rating-Profile">
+            <Rating
+              className="ratingProfile"
+              emptySymbol={<BsStarFill className="emptySymbol" />}
+              fullSymbol={<BsStarFill className="fullSymbol" />}
+              fractions={2}
+              placeholderRating={5}
+              initialRating={userRating.rating}
+              onChange={(value) =>
+                SetUserRating({ rating: value, feedback: userRating.feedback })
+              }
+            />
+          </div>
+          <FormControl mb={2}>
+            <FormLabel>FeedBack</FormLabel>
+            <Input
+              placeholder="FeedBack"
+              value={userRating.feedback}
+              onChange={(e) =>
+                SetUserRating({
+                  rating: userRating.rating,
+                  feedback: e.target.value,
+                })
+              }
+            />
+          </FormControl>
+        </ModalBody>
 
         <ModalFooter>
-          <Button onClick={()=>{
-            handleSendRating()
-            handleFinish()
-          }
-        } colorScheme="green" mr={3}>
+          <Button
+            onClick={() => {
+              handleSendRating();
+              handleFinish();
+            }}
+            colorScheme="green"
+            mr={3}
+          >
             Finish
           </Button>
           <Button onClick={onClose}>Cancel</Button>

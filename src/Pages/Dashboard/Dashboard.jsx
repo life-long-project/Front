@@ -139,7 +139,7 @@ export default function Dashboard() {
       </aside>
       {/* End Sidebar*/}
 
-      <main id="main" className="main mt-5 pt-5">
+      <main id="main" className="main mt-2">
         <div className="pagetitle">
           <h1>Dashboard</h1>
         </div>

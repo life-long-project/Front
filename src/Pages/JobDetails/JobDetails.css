@@ -157,7 +157,7 @@
 }
 .sidebarJobTitle:hover{
   background-color: var(--main-color);
-  color: #fff;
+  color: #fff !important;
   border-color: var(--main-color);
 }
 .jobDescriptionSkills{
@@ -182,10 +182,12 @@
   box-shadow: 0 1px 3px #12151b29;
   margin-bottom: 16px;
   padding: 18px;
+  font-size: 20px;
 }
 .offer-card:hover{
   background-color: var(--third-color);
 }
+
 @media screen and (max-width: 768px) {
   .jobDescriptionFooterText{
     align-items: center;

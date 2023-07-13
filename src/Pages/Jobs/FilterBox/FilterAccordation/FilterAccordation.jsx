@@ -28,15 +28,13 @@ export default function FilterAccordation({
     setValues((pre) => pre.filter((i) => i !== e.target.value));
   };
 
- 
-
   return (
     <>
       <Accordion defaultIndex={[0]} allowMultiple>
         <AccordionItem className="filterBoxAccordation">
           <h2>
             <AccordionButton>
-              <Box as="span" flex="1" textAlign="left" className="fw-bold">
+              <Box as="span" flex="1" textAlign="left" className="fw-bold text-capitalize">
                 {filterTitle}
               </Box>
               <AccordionIcon />

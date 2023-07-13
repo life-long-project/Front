@@ -6,8 +6,6 @@ import { RiMessage2Fill } from "react-icons/ri";
 import {
   Avatar,
   Image,
-  Img,
-  MenuDivider,
   MenuGroup,
   Stack,
 } from "@chakra-ui/react";
@@ -23,6 +21,7 @@ export default function NavBar() {
   const { user } = useAuthContext();
   const { logout } = useLogout();
   const navigate = useNavigate();
+  console.log(user);
 
   return (
     <>
@@ -130,15 +129,15 @@ export default function NavBar() {
                     name={user && user.username}
                   ></Avatar>
                   <span className="d-none d-md-block dropdown-toggle ps-2">
-                    K. Anderson
+                    {user && user.username}
                   </span>
                 </Link>
                 {/* End Profile Iamge Icon */}
 
                 <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                   <li className="dropdown-header">
-                    <h6>Kevin Anderson</h6>
-                    <span>Web Designer</span>
+                    <h6>{user && user.username}</h6>
+                    <span>{user && user.email}</span>
                   </li>
                   <li>
                     <hr className="dropdown-divider" />
