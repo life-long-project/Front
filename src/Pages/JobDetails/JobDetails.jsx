@@ -560,7 +560,7 @@ export default function JobDetails() {
                         </div>
                       </TabPanel>
                       <TabPanel>
-                        {job[0].offers.map((o, i) => (
+                        {job[0]?.offers?.map((o, i) => (
                           <div class="row offer-card" key={i}>
                             <div class="row mb-2">
                               <div className="col-1 d-flex justify-content-center align-items-center">
@@ -582,7 +582,7 @@ export default function JobDetails() {
                                   }
                                   fractions={2}
                                   readonly
-                                  initialRating={o.owner.rating}
+                                  initialRating={o?.owner?.rating}
                                 />
                               </div>
                               <div className="col-1 d-flex justify-content-center align-items-center">
@@ -661,7 +661,7 @@ export default function JobDetails() {
                             emptySymbol={<BsStarFill className="emptySymbol" />}
                             fullSymbol={<BsStarFill className="fullSymbol" />}
                             fractions={2}
-                            initialRating={job[0].user.rating}
+                            initialRating={job[0].user?.rating}
                             readonly
                           />{" "}
                         </div>

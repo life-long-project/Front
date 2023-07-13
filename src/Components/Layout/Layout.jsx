@@ -4,6 +4,7 @@ import Footer from "../Footer/Footer";
 import { Outlet } from "react-router-dom";
 import "./Layout.css";
 import useAuthContext from "../../Hooks/useAuthContext";
+import SupportChat from "../SupportChat/SupportChat";
 
 export default function Layout() {
   const { user } = useAuthContext();
@@ -11,11 +12,16 @@ export default function Layout() {
   return (
     <>
       <NavBar />
-      <div className={`EmptyPage position-relative ${user && user.is_admin ? "pt-5" : ""}`}>
-        <Outlet></Outlet>
-        {/* <div className="support-chat">
+      <div className="supported-chat">
+        <SupportChat />
+      </div>
 
-        </div> */}
+      <div
+        className={`EmptyPage position-relative ${
+          user && user.is_admin ? "pt-5" : ""
+        }`}
+      >
+        <Outlet></Outlet>
       </div>
       <Footer />
     </>

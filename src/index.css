@@ -2,7 +2,7 @@
 
 /* width */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
   height: 10px;
 }
 /* Track */
@@ -12,7 +12,7 @@
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: var(--fourth-color);
-  border-radius: 10px;
+  border-radius: 8px;
 }
 
 :root {

@@ -2,3 +2,10 @@
   min-height: 100vh !important;
   background-color: var(--bg-color) !important;
 }
+.supported-chat{
+  position: fixed !important;
+  bottom: 0 !important;
+  right: 0 !important;
+  z-index: 9999 !important;
+  transition: all 0.3s ease-in-out;
+}

@@ -22,7 +22,6 @@ export const useGetByAction = () => {
       setError("could not fetch the data");
       console.log(err.message);
     }
-    console.log("hello");
   };
 
   return { getData, setData, data, isPending, error };
