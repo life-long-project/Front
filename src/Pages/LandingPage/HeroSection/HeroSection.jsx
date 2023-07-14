@@ -16,6 +16,7 @@ export default function HeroSection() {
   const [selectedCity, setSelectedCity] = useState("");
   const [searchWord, setSearchWord] = useState("");
 
+
   const { data: citiesData } = useAxiosGet(
     "https://back-ph2h.onrender.com/cities"
   );

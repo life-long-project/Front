@@ -123,6 +123,23 @@ export default function JobDetails() {
       console.log(error);
     }
   };
+  const handleCreateConversation = async () => {
+    try {
+      const res = await axios.post(
+        `https://back-ph2h.onrender.com/conversation/first_message/?auth_token=${localStorage.getItem("token")}`,
+        {
+          senderId:job[0]?.posted_by_id,
+          receiverId:job[0]?.accepted_user_id,
+          text:"honerd to accept you for this job"
+          }
+      );
+      console.log(res);
+
+      // navigate("/jobs")
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const { data, isPending, error } = useAxiosGet(
     `https://back-ph2h.onrender.com/jobs/related`
@@ -230,8 +247,8 @@ export default function JobDetails() {
 
                   <ModalFooter>
                     <Button
-                      onClick={() => {
-                        handleAcceptOffer(acceptedOffer);
+                      onClick={async() => {
+                        await handleAcceptOffer(acceptedOffer);
                         onCloseAccept();
                       }}
                       colorScheme="green"
@@ -283,7 +300,7 @@ export default function JobDetails() {
                       <div className="alert alert-success" role="alert">
                         <IoCheckmarkDoneOutline className="d-inline me-2" />
                         Your Apply Request Is Accepted Now You Can{" "}
-                        <Link className=" text-decoration-underline">
+                        <Link to="/messenger" className=" text-decoration-underline">
                           Chat Publisher
                         </Link>
                       </div>
@@ -372,7 +389,9 @@ export default function JobDetails() {
                               </div>
                               <div className="jobDescriptionApplyBtn me-3">
                                 {" "}
-                                <button>Message</button>
+                                <button onClick={async()=>{
+                                  await handleCreateConversation()
+                                  navigate("/messenger")}}>Message</button>
                               </div>
                             </>
                           )}

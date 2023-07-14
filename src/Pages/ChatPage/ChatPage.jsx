@@ -27,7 +27,7 @@ export default function ChatPage(props) {
 
   // socket init
   useEffect(() => {
-    socket.current = io("https://back-ph2h.onrender.com");
+    socket.current = io("ws://localhost:8900");
     socket.current.on("newMessage", (data) => {
       setArrivalMessage({
         sender: data.senderId,
@@ -38,7 +38,7 @@ export default function ChatPage(props) {
   }, []);
   useEffect(() => {
     arrivalMessage &&
-      currentChat?.members.includes(arrivalMessage.sender) &&
+      currentChat?.conversation.members.includes(arrivalMessage.sender) &&
       setMessages({ messages: [...MessagesRes.messages, arrivalMessage] });
   }, [arrivalMessage, currentChat]);
 
@@ -131,7 +131,7 @@ export default function ChatPage(props) {
       console.log(err);
     }
   };
-
+  console.log(conversatonsRes);
   return (
     <>
       <section>
@@ -250,11 +250,11 @@ export default function ChatPage(props) {
                         </div>
                       </ScrollToBottom>
                       <div className="text-muted d-flex justify-content-start align-items-center pe-3 pt-3 mt-2">
-                      <Avatar
-                                      className="me-2"
-                                      name={myProfile && myProfile.full_name}
-                                      src={myProfile && myProfile.profile_url}
-                                    />
+                        <Avatar
+                          className="me-2"
+                          name={myProfile && myProfile.full_name}
+                          src={myProfile && myProfile.profile_url}
+                        />
 
                         <input
                           type="text"

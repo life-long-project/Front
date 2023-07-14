@@ -12,7 +12,7 @@ export default function Conversation({ conversation, currentUser,setMyFriend }) 
     const friendId = conversation?.conversation.members?.find(
       (m) => m !== currentUser._id
     );
-
+console.log(conversation);
     const getUser = async () => {
       try {
         const res = await axios.get(
@@ -40,14 +40,14 @@ export default function Conversation({ conversation, currentUser,setMyFriend }) 
                   {
                     <Avatar
                     className="me-3"
-                      name={user.user.full_name}
+                      name={user.user?.full_name}
                       src={user.user.profile_url}
                     />
                   }
                   <span className="badge bg-success badge-dot"></span>
                 </div>
                 <div className="pt-1">
-                  <p className="fw-bold mb-0">{user.user.full_name}</p>
+                  <p className="fw-bold mb-0">{user.user?.full_name}</p>
                   <p className="small text-muted">{conversation.lastMessage.text}</p>
                 </div>
               </div>
