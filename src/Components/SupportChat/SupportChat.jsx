@@ -1,8 +1,21 @@
 import { Img } from "@chakra-ui/react";
 import React from "react";
 import "./SupportChat.css";
+import axios from "axios";
 
 export default function SupportChat() {
+  const handleSend = async () => {
+    try {
+      const res = await axios.post(`https://back-ph2h.onrender.com/chat`, {
+        message: "what if my visa not workig correctly",
+      });
+      console.log(res);
+
+      // navigate("/jobs")
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <div className="collapse mt-3" id="collapseExample">
@@ -40,9 +53,9 @@ export default function SupportChat() {
               id="exampleFormControlInput3"
               placeholder="Type message"
             />
-            <a className="ms-3 link-info" href="#!">
-              <i className="fas fa-paper-plane"></i>
-            </a>
+            {/* <a className="ms-3 link-info" href="#!"> */}
+            <i className="fas fa-paper-plane"></i>
+            {/* </a> */}
           </div>
         </div>
       </div>

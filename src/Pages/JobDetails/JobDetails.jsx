@@ -439,27 +439,27 @@ export default function JobDetails() {
                       <div className="carousel-item active">
                         <input
                           type="image"
-                          src="https://www.simplilearn.com/ice9/free_resources_article_thumb/Java_Developer_Job_Description.jpg"
+                          src="/images/snap.jpg"
                           className="d-block w-100"
                           alt="..."
                         />
                       </div>
-                      <div className="carousel-item">
+                      {/* <div className="carousel-item">
                         <input
                           type="image"
                           src="https://themesdesign.in/jobcy/layout/assets/images/job-detail.jpg"
                           className="d-block w-100"
                           alt="..."
                         />
-                      </div>
-                      <div className="carousel-item">
+                      </div> */}
+                      {/* <div className="carousel-item">
                         <input
                           type="image"
                           src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg"
                           className="d-block w-100"
                           alt="..."
                         />
-                      </div>
+                      </div> */}
                     </div>
                     <button
                       className="carousel-control-prev"

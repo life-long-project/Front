@@ -26,13 +26,14 @@ import {
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import Loading from "../LoadingPage/LoadingPage";
 import JobList from "./JobList/JobList";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useAuthContext from "../../Hooks/useAuthContext";
 import { useGetByAction } from "../../Hooks/useGetByAction";
 import FilterAccordation from "./FilterBox/FilterAccordation/FilterAccordation";
 
 export default function Jobs() {
   const location = useLocation();
+  const navigate =useNavigate()
   const [selectedSort, setSelectedSort] = useState("updatedAt");
   const [skills, setSkills] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState([]);
@@ -56,7 +57,15 @@ export default function Jobs() {
   const [search, setSearch] = useState("");
   // const [values, setValues] = useState([]);
   const { user } = useAuthContext();
+  console.log(user);
 
+  useEffect(() => {
+    if(user&& user.is_admin
+      )
+navigate("/dashboard")
+    
+  }, [user])
+  
   const {
     data: profileData,
     isPending: profileIsPending,
