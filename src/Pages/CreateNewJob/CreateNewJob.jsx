@@ -16,6 +16,7 @@ import CreatableSelect from "react-select/creatable";
 import { useAxiosGet } from "../../Hooks/useAxiosGet";
 import axios from "axios";
 import useAuthContext from "../../Hooks/useAuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateNewJob() {
   const [skills, setSkills] = useState([]);
@@ -24,6 +25,7 @@ export default function CreateNewJob() {
   const [submitLoading, setSubmitLoading] = useState(false);
   const [error, setError] = useState(false);
   const { user } = useAuthContext();
+  const navigate = useNavigate()
   console.log(user);
 
   const { data: skillsData } = useAxiosGet(
@@ -80,6 +82,7 @@ export default function CreateNewJob() {
       );
       setSubmitLoading(false);
       console.log(postResponse);
+      navigate("/jobs")
     } catch (error) {
       setError(error);
       setSubmitLoading(false);

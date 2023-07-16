@@ -278,9 +278,13 @@ export default function NavBar() {
                       </Menu>
                     </li>
                     <li className="nav-item d-flex align-items-center">
+                      
                       <span className="text-white navBarIcons px-3">
+                      <Link to="/messenger">
                         <RiMessage2Fill />
+                        </Link>
                       </span>
+                     
                     </li>
                     <li className="nav-item d-flex align-items-center">
                       <Menu>
