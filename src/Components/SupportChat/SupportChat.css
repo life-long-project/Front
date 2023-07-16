@@ -13,3 +13,6 @@
   overflow-y: scroll;
   
 }
+.card-body-support-content{
+  width: 400px !important;
+}

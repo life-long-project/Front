@@ -41,7 +41,7 @@ console.log(conversation);
                     <Avatar
                     className="me-3"
                       name={user.user?.full_name}
-                      src={user.user.profile_url}
+                      src={user?.user?.profile_url}
                     />
                   }
                   <span className="badge bg-success badge-dot"></span>

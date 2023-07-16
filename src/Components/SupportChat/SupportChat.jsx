@@ -35,7 +35,37 @@ export default function SupportChat() {
             className="card-body card-body-content"
             data-mdb-perfect-scrollbar="true"
           >
-            {messages && messages.map((m, key) => <p key={key}>{m.text}</p>)}
+            {messages &&
+              messages.map((m, key) => (
+                <>
+                  {m.owner === "client" ? (
+                    <div
+                      className="d-flex flex-row justify-content-start"
+                      key={key}
+                    >
+                      <div>
+                        <p
+                          className="small p-2 ms-3 mb-1 rounded-3"
+                          style={{ backgroundColor: "#f5f6f7" }}
+                        >
+                          {m.text}
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div
+                      className="d-flex flex-row justify-content-end mb-4 pt-1 ps-3"
+                      key={key}
+                    >
+                      <div>
+                        <p className="small p-2 me-3 mb-1 text-white rounded-3 bg-info">
+                          {m.text}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </>
+              ))}
           </div>
           <div className="card-footer bg-white text-muted d-flex justify-content-start align-items-center p-3 mt-0">
             <Img
@@ -59,7 +89,7 @@ export default function SupportChat() {
       </div>
 
       <button
-        class="btn btn-primary"
+        class="btn btn-dark"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#collapseExample"
@@ -67,8 +97,8 @@ export default function SupportChat() {
         aria-controls="collapseExample"
       >
         <div className="d-flex justify-content-between align-items-center">
-          <span>Collapsible Chat App</span>
-          <i className="fas fa-chevron-down"></i>
+          <span>Customer Support</span>
+          <i className="fas fa-chevron-up ps-2"></i>
         </div>
       </button>
     </>
