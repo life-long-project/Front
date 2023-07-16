@@ -1,19 +1,30 @@
 import { Img } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import "./SupportChat.css";
 import axios from "axios";
 
 export default function SupportChat() {
+  const [clientMessage, setClientMessage] = useState("");
+  const [messages, setMessages] = useState([]);
   const handleSend = async () => {
-    try {
-      const res = await axios.post(`https://back-ph2h.onrender.com/chat`, {
-        message: "what if my visa not workig correctly",
-      });
-      console.log(res);
-
-      // navigate("/jobs")
-    } catch (error) {
-      console.log(error);
+    if (clientMessage !== "") {
+      try {
+        setMessages((pre) => [
+          ...pre,
+          { text: clientMessage, owner: "client" },
+        ]);
+        const res = await axios.post(`https://back-ph2h.onrender.com/chat`, {
+          message: clientMessage,
+        });
+        console.log(res);
+        setClientMessage("");
+        setMessages((pre) => [
+          ...pre,
+          { text: res.data.response, owner: "gpt" },
+        ]);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
   return (
@@ -24,22 +35,7 @@ export default function SupportChat() {
             className="card-body card-body-content"
             data-mdb-perfect-scrollbar="true"
           >
-            <p>Lorem, ipsum dolor.</p>
-            <p>Lorem, ipsum dolor.</p>
-            <p>Lorem, ipsum dolor.</p>
-            <p>Lorem, ipsum dolor.</p>
-            <p>Lorem, ipsum dolor.</p>
-            <p>Lorem, ipsum dolor.</p>
-            <p>Lorem, ipsum dolor.</p>
-            <p>Lorem, ipsum dolor.</p>
-            <p>Lorem, ipsum dolor.</p>
-            <p>Lorem, ipsum dolor.</p>
-            <p>Lorem, ipsum dolor.</p>
-            <p>Lorem, ipsum dolor.</p>
-            <p>Lorem, ipsum dolor.</p>
-            <p>Lorem, ipsum dolor.</p>
-            <p>Lorem, ipsum dolor.</p>
-            <p>Lorem, ipsum dolor.</p>
+            {messages && messages.map((m, key) => <p key={key}>{m.text}</p>)}
           </div>
           <div className="card-footer bg-white text-muted d-flex justify-content-start align-items-center p-3 mt-0">
             <Img
@@ -52,9 +48,11 @@ export default function SupportChat() {
               className="form-control form-control-lg"
               id="exampleFormControlInput3"
               placeholder="Type message"
+              onChange={(e) => setClientMessage(e.target.value)}
+              value={clientMessage}
             />
             {/* <a className="ms-3 link-info" href="#!"> */}
-            <i className="fas fa-paper-plane"></i>
+            <i onClick={handleSend} className="fas fa-paper-plane"></i>
             {/* </a> */}
           </div>
         </div>
